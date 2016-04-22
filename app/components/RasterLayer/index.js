@@ -1,31 +1,45 @@
 import React, { Proptypes } from 'react';
-import { Decorator as Cerebral } from 'cerebral-view-react';
+import { Decorator as Cerebral, Link } from 'cerebral-view-react';
 import styles from './style.css';
+
 
 @Cerebral((props) => {
   return {
-    raster: [ 'raster' ],
   };
 })
 
 class _RasterLayer extends React.Component {
+  
 
   componentWillMount() {
+    this.container = document.getElementById('hidden-stuff');
+    this.canvas = document.createElement('CANVAS');
+    this.canvas.style.visibility = 'hidden';
+    this.container.appendChild(this.canvas);
+  }
+
+  componentWillUnmount() {
+    this.container.removeChild(this.canvas);
   }
 
   render() {
+    // create an image in the hidden canvas from the props
     return (
-      <div id='map-panel'>
-        <Map onLeafletMousedown={(e) => {signals.mouseDownOnMap({vertex_value: e.latlng, select_note: this.props.selectedNote, newSelectedNote:this.props.id})}} dragging={true} center={position} zoom={19} tms={true}>
-          <TileLayer
-            url="http://otile1.mqcdn.com/tiles/1.0.0/sat/{z}/{x}/{y}.png"
-            attribution='Portions Courtesy NASA/JPL-Caltech and U.S. Depart. of Agriculture, Farm Service Agency'
-          />
-          <RasterLayer raster={this.props.raster}/>
-        </Map> 
+      <div>
+        <RasterTileInternalLayer canvas={this.canvas} />
       </div>
     );
   }
 
 }
+
+class RasterTileInternalLayer extends CanvasTileLayer {
+  componentWillMount() {
+    super.componentWillMount();
+    this.leafletElement.drawTile = this.drawTile.bind(this);
+  }
+  drawTile(canvas, tilePoint, zoom) {
+  }
+}
+
 export default _RasterLayer;
