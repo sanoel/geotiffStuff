@@ -1,4 +1,5 @@
 import { Decorator as Cerebral } from 'cerebral-view-react';
+import { CanvasTileLayer } from 'react-leaflet';
 import React from 'react';
 import styles from './style.css';
 import InternalTileLayer from './RasterLayerInternalTileLayer';
@@ -12,7 +13,7 @@ export default class RasterLayer extends CanvasTileLayer {
 
   componentWillMount() {
     this.container = document.getElementById('hidden-stuff');
-    this.canvas = document.createElement('CANVAS');
+    this.canvas = document.createElement('canvas');
     this.canvas.style.visibility = 'visible';
     this.container.appendChild(this.canvas);
   }
@@ -21,7 +22,7 @@ export default class RasterLayer extends CanvasTileLayer {
     this.container.removeChild(this.canvas);
   }
 
-  drawTile {
+  drawTile(canvas, tilePoint, zoom) {
   }
 
   render() {
@@ -32,16 +33,16 @@ export default class RasterLayer extends CanvasTileLayer {
     var height = raster.data[0].length;
     var img = ctx.createImageData(width, height);
     var data = img.data;
-    for (var i = 0; i < width*height*4; i++) {
-      if (i == 0) {
-        data[i]     = raster.data[i][j]; // red
-        data[i + 1] = ;   // green
-        data[i + 2] = 0;   // blue
-        data[i + 3] = 255; //
-      } else {
-        data[i]     = 0;   // red
-        data[i + 1] = 255; // green
-        data[i + 2] = 0;   // blue
+    for (var i = 0; i < width; i++) {
+      for (var j = 0; j < height; j++) {
+        for (var l = 0; l < raster.legend.levels.length-1; l++) {
+          if (raster.data[i][j] > raster.legend.levels[l].value & raster.data[i][j] <= raster.legend.levels[l+1]) { 
+            data[j*width+i]   = raster.legend.levels.r; // red
+            data[j*width+i+1] = raster.legend.levels.g; // green
+            data[j*width+i+2] = raster.legend.levels.b; // blue
+            data[j*width+i+3] = raster.legend.levels.a; // alpha
+          }
+        }
       }
     } 
     ctx.putImageData(img, 0, 0);
