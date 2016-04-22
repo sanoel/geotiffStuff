@@ -16,10 +16,10 @@ class App extends React.Component {
 
   render() {
 
+  //      <NoteList />
     return (
       <div className="app">
         <MenuBar />
-        <NoteList />
         <Map />
       </div>
     );

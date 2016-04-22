@@ -3,7 +3,6 @@ import { Decorator as Cerebral, Link } from 'cerebral-view-react';
 import { Polygon, Marker, Map, TileLayer, ImageOverlay, latLng, latLngBounds} from 'react-leaflet';
 import RasterLayer from '../RasterLayer';
 import styles from './map.css';
-console.log(RasterLayer);
 
 @Cerebral((props) => {
   return {

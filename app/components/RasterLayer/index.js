@@ -15,14 +15,33 @@ export default class RasterLayer extends CanvasTileLayer {
     this.container = document.getElementById('hidden-stuff');
     this.canvas = document.createElement('canvas');
     this.canvas.style.visibility = 'visible';
+    this.canvas.style.zIndex = '1000';
     this.container.appendChild(this.canvas);
+
+    super.componentWillMount();
+    this.leafletElement.drawTile = this.drawTile.bind(this);
   }
 
   componentWillUnmount() {
-    this.container.removeChild(this.canvas);
+    //this.container.removeChild(this.canvas);
   }
 
   drawTile(canvas, tilePoint, zoom) {
+  }
+
+  colorForValue(val) {
+    var raster = this.props.raster;
+    var levels = raster.legend.levels;
+    var numlevels = levels.length;
+    for (var i = 0; i < numlevels-1; i++) {
+      if (val > levels[i].value && val <= levels[i+1].value) {
+        // it's in this one: return floor color.  
+        // TODO: interpolate with upper color.
+        // TODO: handle values below min and above max color
+        return levels[i].color;
+      }
+    }
+    return null;
   }
 
   render() {
@@ -35,14 +54,12 @@ export default class RasterLayer extends CanvasTileLayer {
     var data = img.data;
     for (var i = 0; i < width; i++) {
       for (var j = 0; j < height; j++) {
-        for (var l = 0; l < raster.legend.levels.length-1; l++) {
-          if (raster.data[i][j] > raster.legend.levels[l].value & raster.data[i][j] <= raster.legend.levels[l+1]) { 
-            data[j*width+i]   = raster.legend.levels.r; // red
-            data[j*width+i+1] = raster.legend.levels.g; // green
-            data[j*width+i+2] = raster.legend.levels.b; // blue
-            data[j*width+i+3] = raster.legend.levels.a; // alpha
-          }
-        }
+         const color = this.colorForValue(raster.data[i][j]);
+         data[j*width+i]   = color.r; // red
+         data[j*width+i+1] = color.g; // green
+         data[j*width+i+2] = color.b; // blue
+         data[j*width+i+3] = 255; // blue
+//         data[j*width+i+3] = (typeof color.a !== 'undefined') ? color.a : 0; // alpha
       }
     } 
     ctx.putImageData(img, 0, 0);
