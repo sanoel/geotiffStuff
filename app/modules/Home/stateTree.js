@@ -1,6 +1,27 @@
 import uuid from 'uuid';
 
 var tree = {
+
+  raster: {
+    legend: {
+      levels: [
+        { value: 1, color: { r: 255, g: 0, b: 0 } },
+        { value: 5, color: { r: 0, g: 255, b: 0 } },
+        { value: 9, color: { r: 0, g: 0, b: 255 } },
+      ],
+    },
+    geotransform: {
+      topleft: { lat: 4.498, lon: -72.9 },
+      cellspacing: { lat: -0.00934, lon: 0.00327 },
+    },
+    data: [
+      [ 1.1, 2, 3 ],
+      [ 4, 5.4, 6 ],
+      [ 7, 8.2, 9 ],
+    ],
+  },
+
+
   model: {
     selected_note: {},
     notes: initial_notes(), //initial_notes(),

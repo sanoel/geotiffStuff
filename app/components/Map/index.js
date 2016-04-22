@@ -7,8 +7,7 @@ console.log(RasterLayer);
 
 @Cerebral((props) => {
   return {
-    raster: [ 'raster' ],
-    legend: [ 'legend' ],
+    raster: [ 'home', 'raster' ],
   };
 })
 
@@ -23,7 +22,7 @@ class _Map extends React.Component {
             url="http://otile1.mqcdn.com/tiles/1.0.0/sat/{z}/{x}/{y}.png"
             attribution='Portions Courtesy NASA/JPL-Caltech and U.S. Depart. of Agriculture, Farm Service Agency'
           />
-          <RasterLayer raster={this.props.raster} legend={this.props.legend}/>
+          <RasterLayer raster={this.props.raster} />
         </Map> 
       </div>
     );
