@@ -1,5 +1,4 @@
-import React, { Proptypes } from 'react';
-import { Decorator as Cerebral, Link } from 'cerebral-view-react';
+import { Decorator as Cerebral } from 'cerebral-view-react';
 import styles from './style.css';
 
 
