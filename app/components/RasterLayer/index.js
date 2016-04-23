@@ -58,10 +58,10 @@ export default class RasterLayer extends CanvasTileLayer {
     for (var i = 0; i < width; i++) {
       for (var j = 0; j < height; j++) {
          let color = this.colorForValue(raster.data[i][j]);
-         data[j*width*4+i]   = color.r; // red
-         data[j*width*4+i+1] = color.g; // green
-         data[j*width*4+i+2] = color.b; // blue
-         data[j*width*4+i+3] = 255; // blue
+         data[(j*width+i)*4]   = color.r; // red
+         data[(j*width+i)*4+1] = color.g; // green
+         data[(j*width+i)*4+2] = color.b; // blue
+         data[(j*width+i)*4+3] = 255; // blue
 //         data[j*width+i+3] = (typeof color.a !== 'undefined') ? color.a : 0; // alpha
       }
     } 
