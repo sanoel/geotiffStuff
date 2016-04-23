@@ -23,7 +23,7 @@ export default class RasterLayer extends CanvasTileLayer {
   }
 
   componentWillUnmount() {
-    //this.container.removeChild(this.canvas);
+    this.canvas.remove();
   }
 
   drawTile(canvas, tilePoint, zoom) {
@@ -41,6 +41,7 @@ export default class RasterLayer extends CanvasTileLayer {
         return levels[i].color;
       }
     }
+    console.log('ERROR: val = ', val, ', but did not find color!');
     return null;
   }
 
@@ -50,15 +51,17 @@ export default class RasterLayer extends CanvasTileLayer {
     var ctx = this.canvas.getContext('2d');
     var width = raster.data.length;
     var height = raster.data[0].length;
+    this.canvas.width = width;
+    this.canvas.height = height;
     var img = ctx.createImageData(width, height);
     var data = img.data;
     for (var i = 0; i < width; i++) {
       for (var j = 0; j < height; j++) {
-         const color = this.colorForValue(raster.data[i][j]);
-         data[j*width+i]   = color.r; // red
-         data[j*width+i+1] = color.g; // green
-         data[j*width+i+2] = color.b; // blue
-         data[j*width+i+3] = 255; // blue
+         let color = this.colorForValue(raster.data[i][j]);
+         data[j*width*4+i]   = color.r; // red
+         data[j*width*4+i+1] = color.g; // green
+         data[j*width*4+i+2] = color.b; // blue
+         data[j*width*4+i+3] = 255; // blue
 //         data[j*width+i+3] = (typeof color.a !== 'undefined') ? color.a : 0; // alpha
       }
     } 
