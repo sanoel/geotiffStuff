@@ -15,7 +15,7 @@ export default class RasterLayer extends CanvasTileLayer {
     this.container = document.getElementById('hidden-stuff');
     this.canvas = document.createElement('canvas');
     this.canvas.style.visibility = 'visible';
-    this.canvas.style.zIndex = '1000';
+    this.canvas.style.zIndex = 1000;
     this.container.appendChild(this.canvas);
 
     super.componentWillMount();
