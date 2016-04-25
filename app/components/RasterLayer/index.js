@@ -30,14 +30,14 @@ export default class RasterLayer extends CanvasTileLayer {
   }
 
   colorForValue(val) {
-    var raster = this.props.raster;
-    var levels = raster.legend.levels;
-    var numlevels = levels.length;
-    for (var i = 0; i < numlevels-1; i++) {
-      if (val > levels[i].value && val <= levels[i+1].value) {
-        // it's in this one: return floor color.  
-        // TODO: interpolate with upper color.
-        // TODO: handle values below min and above max color
+    const raster = this.props.raster;
+    const levels = raster.legend.levels;
+    const numlevels = levels.length;
+    for (let i = 0; i < numlevels-1; i++) {
+      let bottom = levels[i].value;
+      let top = levels[i+1].value;
+      if (val > bottom && val <= top) {
+        let percentIntoRange = (val - bottom) / (top - bottom);
         return levels[i].color;
       }
     }
