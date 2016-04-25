@@ -4,6 +4,17 @@ import React from 'react';
 import styles from './style.css';
 import InternalTileLayer from './RasterLayerInternalTileLayer';
 
+function blendColors(c1, c2, percent) {
+  if (typeof c1.a === 'undefined') c1.a = 255; // Defualt opaque
+  if (typeof c1.b === 'undefined') c1.b = 255;
+  const ret = { 
+    r: c1.r * percent + c2.r * (1-percent),
+    g: c1.g * percent + c2.g * (1-percent),
+    b: c1.b * percent + c2.b * (1-percent),
+    a: c1.a * percent + c2.a * (1-percent),
+  };
+}
+
 @Cerebral((props) => {
   return {
   };
@@ -75,11 +86,11 @@ export default class RasterLayer extends CanvasTileLayer {
     const levels = raster.legend.levels;
     const numlevels = levels.length;
     for (let i = 0; i < numlevels-1; i++) {
-      let bottom = levels[i].value;
-      let top = levels[i+1].value;
-      if (val > bottom && val <= top) {
-        let percentIntoRange = (val - bottom) / (top - bottom);
-        return levels[i].color;
+      let bottom = levels[i];
+      let top = levels[i+1];
+      if (val > bottom.value && val <= top.value) {
+        let percentIntoRange = (val - bottom.value) / (top.value - bottom.value);
+        return blendColors(top.color, bottom.color, percentIntoRange);
       }
     }
     console.log('ERROR: val = ', val, ', but did not find color!');
