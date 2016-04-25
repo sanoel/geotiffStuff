@@ -5,13 +5,13 @@ import styles from './style.css';
 import InternalTileLayer from './RasterLayerInternalTileLayer';
 
 function blendColors(c1, c2, percent) {
-  if (typeof c1.a === 'undefined') c1.a = 255; // Defualt opaque
-  if (typeof c1.b === 'undefined') c1.b = 255;
-  const ret = { 
+  let a1 = (typeof c1.a === 'undefined') ? 255 : c1.a; // Defualt opaque
+  let a2 = (typeof c1.b === 'undefined') ? 255 : c1.b;
+  return { 
     r: c1.r * percent + c2.r * (1-percent),
     g: c1.g * percent + c2.g * (1-percent),
     b: c1.b * percent + c2.b * (1-percent),
-    a: c1.a * percent + c2.a * (1-percent),
+    a:   a1 * percent +   a2 * (1-percent),
   };
 }
 
