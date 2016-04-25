@@ -43,37 +43,15 @@ export default class RasterLayer extends CanvasTileLayer {
  
     var dataSwPt = this.props.map.project(dataSw);
     var dataNePt = this.props.map.project(dataNe);
-    console.log(dataSw);
-    console.log(dataNe);
 
-    // Determine bounds of image data in the hidden image canvas space 
+    // Determine where to put the hidden image on the tile canvas 
     if (tileBounds.intersects(dataBounds)) {
-      console.log('tile contains some data');
-
       var tileLeft = dataSwPt.x - tileSwPt.x;
-//      var tileLeft =  dataSwPt.x%256;
       var tileTop =  dataNePt.y - tileNePt.y;
-      //var tileTop =  dataNePt.y%256;
       var tileHeight = (dataSwPt.y - dataNePt.y);
       var tileWidth = (dataNePt.x - dataSwPt.x);
-      console.log(tileLeft, tileTop, tileHeight, tileWidth);
-      //get image data from hidden image
-      //var imgData = this.canvas.getContext('2d').getImageData(0, 0, this.canvas.width, this.canvas.height);
-
       // Put it on the tile
       ctx.drawImage(this.canvas, tileLeft, tileTop, tileWidth, tileHeight);
-
-      // draw the tile grids
-      var padding = 0;
-      var totalExtent = 4096 * (1 + padding * 2);
-      var height = canvas.height;
-      var ratio = height / totalExtent;
-      var pad = 4096 * padding * ratio;
-      var height = canvas.height;
-      ctx.strokeStyle = 'lightgreen';
-      ctx.strokeRect(pad, pad, height - 2 * pad, height - 2 * pad);
-      ctx.beginPath();
-      ctx.stroke();
     }
   }
 

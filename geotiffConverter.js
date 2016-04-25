@@ -1,33 +1,19 @@
 exports.geotiff2json = function(filename) {
-  //var gdal = require('gdal');
-  //var fs = require("fs");
+  var gdal = require('gdal');
+  var fs = require("fs");
   var dataset = gdal.open(filename);
   var GT = dataset.geoTransform;
   var band = dataset.bands.get(1);
   var pixels = band.pixels;
-/*
-  var CT = new gdal.CoordinateTransformation(dataset.srs, gdal.SpatialReference.fromEPSG(3857));
-  var gtifDriver = gdal.drivers.get(1);
-  var ds = gtifDriver.create(file);
-  gdal.reprojectImage({
-    src: dataset,
-    dst: ds, 
-    s_srs: dataset.srs, 
-    t_srs: gdal.SpatialReference.fromEPSG(3857)
-  });
-*/
   var json = {
     type: "RasterDataset",
-    geotransform: GT,
+    geotransform: {
+      topleft: { lat:GT[3] , lon:GT[0] },
+      cellspacing: { lat: GT[5], lon: GT[1] },
+    },
     data: []
   };
-/*
-  json.geotransform[0] = UL.x;
-  json.geotransform[3] = UL.y;
-  json.geotransform[1] = cellsize.x;
-  json.geotransform[5] = cellsize.y;
-  console.log(json);
-*/
+  
   for (var i = 0; i < band.size.x; i++) {
     json.data.push(new Array(band.size.y));
     for (var j = 0; j < band.size.y; j++) {
@@ -35,8 +21,8 @@ exports.geotiff2json = function(filename) {
     }
   }
   var outFileName = filename.slice(0,-4)+'.json'; 
-  fs.writeFile(outFileName, JSON.stringify(json), (err) => {
-     if (err) throw err;
+  fs.writeFile(outFileName, 'export default ' + JSON.stringify(json), (err) => {
+    if (err) throw err;
     console.log('Generated file ' + outFileName + ' from ' + filename);
   });
   return json;
