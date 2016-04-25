@@ -33,8 +33,28 @@ export default class RasterLayer extends CanvasTileLayer {
     var raster = this.props.raster;
     var tifImgData = this.getImgData(southWest, northEast);
     console.log(tifImgData);
-    var topleftpt  = this.props.map.project(L.latLng(raster.geotransform.topleft.lat, raster.geotransform.topleft.lon), zoom);
-    if (tifImgData) ctx.putImageData(tifImgData, topleftpt.x, topleftpt.y);
+    if (tifImgData) {
+      var topleftpt  = this.props.map.project(L.latLng(raster.geotransform.topleft.lat, raster.geotransform.topleft.lon), zoom);
+      console.log(topleftpt);
+      ctx.putImageData(tifImgData, topleftpt.x%256, topleftpt.y%256);
+    }
+
+    //draw grid lines
+    var padding = 0;
+    var totalExtent = 4096 * (1 + padding * 2);
+    var height = canvas.height;
+    var ratio = height / totalExtent;
+    var pad = 4096 * padding * ratio;
+    var height = canvas.height;
+    var halfHeight = height / 2;
+    ctx.strokeStyle = 'lightgreen';
+    ctx.strokeRect(pad, pad, height - 2 * pad, height - 2 * pad);
+    ctx.beginPath();
+    ctx.moveTo(pad, halfHeight);
+    ctx.lineTo(height - pad, halfHeight);
+    ctx.moveTo(halfHeight, pad);
+    ctx.lineTo(halfHeight, height - pad);
+    ctx.stroke();
   }
 
   getImgData(southWest, northEast) {
@@ -76,13 +96,13 @@ export default class RasterLayer extends CanvasTileLayer {
     this.canvas.height = height;
     var img = ctx.createImageData(width, height);
     var data = img.data;
-    for (var i = 0; i < width; i++) {
-      for (var j = 0; j < height; j++) {
+    for (var j = 0; j < height; j++) {
+      for (var i = 0; i < width; i++) {
          let color = this.colorForValue(raster.data[i][j]);
-         data[(j*width+i)*4]   = color.r; // red
-         data[(j*width+i)*4+1] = color.g; // green
-         data[(j*width+i)*4+2] = color.b; // blue
-         data[(j*width+i)*4+3] = 255; // blue
+         data[(i*width+j)*4]   = color.r; // red
+         data[(i*width+j)*4+1] = color.g; // green
+         data[(i*width+j)*4+2] = color.b; // blue
+         data[(i*width+j)*4+3] = 255; // blue
 //         data[j*width+i+3] = (typeof color.a !== 'undefined') ? color.a : 0; // alpha
       }
     } 
