@@ -4,6 +4,17 @@ import React from 'react';
 import styles from './style.css';
 import InternalTileLayer from './RasterLayerInternalTileLayer';
 
+function blendColors(c1, c2, percent) {
+  let a1 = (typeof c1.a === 'undefined') ? 255 : c1.a; // Defualt opaque
+  let a2 = (typeof c1.b === 'undefined') ? 255 : c1.b;
+  return { 
+    r: c1.r * percent + c2.r * (1-percent),
+    g: c1.g * percent + c2.g * (1-percent),
+    b: c1.b * percent + c2.b * (1-percent),
+    a:   a1 * percent +   a2 * (1-percent),
+  };
+}
+
 @Cerebral((props) => {
   return {
   };
@@ -57,15 +68,15 @@ export default class RasterLayer extends CanvasTileLayer {
 
     
   colorForValue(val) {
-    var raster = this.props.raster;
-    var levels = raster.legend.levels;
-    var numlevels = levels.length;
-    for (var i = 0; i < numlevels-1; i++) {
-      if (val > levels[i].value && val <= levels[i+1].value) {
-        // it's in this one: return floor color.  
-        // TODO: interpolate with upper color.
-        // TODO: handle values below min and above max color
-        return levels[i].color;
+    const raster = this.props.raster;
+    const levels = raster.legend.levels;
+    const numlevels = levels.length;
+    for (let i = 0; i < numlevels-1; i++) {
+      let bottom = levels[i];
+      let top = levels[i+1];
+      if (val > bottom.value && val <= top.value) {
+        let percentIntoRange = (val - bottom.value) / (top.value - bottom.value);
+        return blendColors(top.color, bottom.color, percentIntoRange);
       }
     }
     console.log('ERROR: val = ', val, ', but did not find color!');
