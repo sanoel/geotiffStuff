@@ -11,9 +11,12 @@ import styles from './map.css';
 })
 
 class _Map extends React.Component {
-
   render() {
-    var position = [4.5,-72.4];
+    var raster = this.props.raster;
+    var topLeft = [raster.geotransform.topleft.lat, raster.geotransform.topleft.lon];
+    var bottom = raster.geotransform.topleft.lat + raster.geotransform.cellspacing.lat * raster.data.length;
+    var right = raster.geotransform.topleft.lon + raster.geotransform.cellspacing.lon * raster.data[0].length;
+    var position = [4.6,-72.8];
     return (
       <div id='map-panel'>
         <Map dragging={true} center={position} zoom={11} tms={true}>
@@ -21,6 +24,8 @@ class _Map extends React.Component {
             url="http://otile1.mqcdn.com/tiles/1.0.0/sat/{z}/{x}/{y}.png"
             attribution='Portions Courtesy NASA/JPL-Caltech and U.S. Depart. of Agriculture, Farm Service Agency'
           />
+          <Marker position={topLeft} />
+          <Marker position={[bottom, right]} />
           <RasterLayer raster={this.props.raster} />
         </Map> 
       </div>
