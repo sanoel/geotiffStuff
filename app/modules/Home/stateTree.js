@@ -11,8 +11,8 @@ var tree = {
       ],
     },
     geotransform: {
-      topleft: { lat: 4.498, lon: -72.9 },
-      cellspacing: { lat: -0.00934, lon: 0.00327 },
+      topleft: { lat: 4.624, lon: -72.922 },
+      cellspacing: { lat: -0.00191, lon: 0.00696 },
     },
     data: [
       [ 1.1, 2, 3, 8, 9, 3, 5, 7, 2, 5, 6, 3, 4, 2, 3, 8, 9, 3, 5, 7, 2, 5, 6, 3, 4, 2, 3, 2 ],

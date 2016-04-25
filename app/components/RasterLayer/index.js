@@ -1,5 +1,5 @@
 import { Decorator as Cerebral } from 'cerebral-view-react';
-import { CanvasTileLayer } from 'react-leaflet';
+import { CanvasTileLayer, Point } from 'react-leaflet';
 import React from 'react';
 import styles from './style.css';
 import InternalTileLayer from './RasterLayerInternalTileLayer';
@@ -27,6 +27,27 @@ export default class RasterLayer extends CanvasTileLayer {
   }
 
   drawTile(canvas, tilePoint, zoom) {
+    let ctx = canvas.getContext('2d');
+    var southWest = this.props.map.unproject(new L.Point(tilePoint.x*256, (tilePoint.y*256)+256), zoom);
+    var northEast = this.props.map.unproject(new L.Point((tilePoint.x*256)+256, tilePoint.y*256), zoom);
+    var raster = this.props.raster;
+    var tifImgData = this.getImgData(southWest, northEast);
+    console.log(tifImgData);
+    var topleftpt  = this.props.map.project(L.latLng(raster.geotransform.topleft.lat, raster.geotransform.topleft.lon), zoom);
+    if (tifImgData) ctx.putImageData(tifImgData, topleftpt.x, topleftpt.y);
+  }
+
+  getImgData(southWest, northEast) {
+    var raster = this.props.raster;
+    var tileBounds = L.latLngBounds(southWest, northEast);
+    var topLeft = raster.geotransform.topleft;
+    var gtifSouthWest = L.latLng(topLeft.lat + raster.geotransform.cellspacing.lat*raster.data.length, topLeft.lon);
+    var gtifNorthEast = L.latLng(topLeft.lat, topLeft.lon + raster.geotransform.cellspacing.lon*raster.data[0].length);
+    var gtifBounds = L.latLngBounds([gtifSouthWest, gtifNorthEast]);
+    if (tileBounds.intersects(gtifBounds)) {
+      console.log('great success');
+      return this.canvas.getContext('2d').getImageData(0, 0, this.canvas.width, this.canvas.height);
+    }
   }
 
   colorForValue(val) {
