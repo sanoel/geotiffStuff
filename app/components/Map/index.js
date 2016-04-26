@@ -25,8 +25,6 @@ class _Map extends React.Component {
             url="http://otile1.mqcdn.com/tiles/1.0.0/sat/{z}/{x}/{y}.png"
             attribution='Portions Courtesy NASA/JPL-Caltech and U.S. Depart. of Agriculture, Farm Service Agency'
           />
-          <Marker position={topLeft} />
-          <Marker position={[bottom, right]} />
           <RasterLayer raster={this.props.ph.ph} />
         </Map> 
       </div>
