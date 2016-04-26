@@ -6,14 +6,14 @@ import styles from './map.css';
 
 @Cerebral((props) => {
   return {
-    raster: [ 'home', 'raster' ],
-    ph: [ 'home', 'ph' ],
+    map_list: ['home', 'map_list'],
+    selected_map_item: ['home', 'model', 'selected_map_item'],
   };
 })
 
 class _Map extends React.Component {
   render() {
-    var raster = this.props.raster;
+    var raster = this.props.map_list[this.props.selected_map_item];
     var topLeft = [raster.geotransform.topleft.lat, raster.geotransform.topleft.lon];
     var bottom = raster.geotransform.topleft.lat + raster.geotransform.cellspacing.lat * raster.data.length;
     var right = raster.geotransform.topleft.lon + raster.geotransform.cellspacing.lon * raster.data[0].length;
@@ -25,7 +25,7 @@ class _Map extends React.Component {
             url='http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}'
             attribution= 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
           />
-          <RasterLayer raster={this.props.ph.ph} />
+          <RasterLayer raster={this.props.map_list[this.props.selected_map_item]} />
         </Map> 
       </div>
     );

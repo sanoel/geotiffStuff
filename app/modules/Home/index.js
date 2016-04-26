@@ -1,9 +1,4 @@
-import { selectNote } from './chains';
-import { textInputChanged } from './chains';
-import { changeSortMode } from './chains';
-import { changeShowHideState } from './chains';
-import { addNewNote } from './chains';
-import { removeNote } from './chains';
+import { removeNote, addNewNote, changeShowHideState, changeSortMode, textInputChanged, selectNote, selectMapListItem } from './chains';
 import uuid from 'uuid';
 import tree from './stateTree.js';
 import { dropPoint } from './mapchain';
@@ -15,6 +10,10 @@ export default (options = {}) => {
     );
 
     module.addSignals({
+      mapListItemClicked: [
+      ...selectMapListItem
+      ],
+      
       sortingTabClicked: [
       ...changeSortMode
       ],

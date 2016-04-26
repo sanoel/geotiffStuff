@@ -8,6 +8,8 @@ exports.geotiff2json = function(filename) {
   var pixels = band.pixels;
   var json = {
     nodataval: band.noDataValue,
+    name: 'pH',
+    units: 'Power of Hydrogen',
     legend: {
       levels: [
         { value: stats.min, color: { r: 255, g: 0, b: 0 } },
@@ -21,10 +23,10 @@ exports.geotiff2json = function(filename) {
     data: []
   };
   
-  for (var i = 0; i < band.size.x; i++) {
-    json.data.push(new Array(band.size.y));
-    for (var j = 0; j < band.size.y; j++) {
-      json.data[i][j] = pixels.get(i,j);
+  for (var j = 0; j < band.size.y; j++) {
+    json.data.push(new Array(band.size.x));
+    for (var i = 0; i < band.size.x; i++) {
+      json.data[j][i] = pixels.get(i,j);
     }
   }
   var outFileName = filename.slice(0,-4)+'.json'; 

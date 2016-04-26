@@ -38,7 +38,6 @@ export default class RasterLayer extends CanvasTileLayer {
   }
 
   drawTile(canvas, tilePoint, zoom) {
-    console.log(raster);
     var raster = this.props.raster;
     var ctx = canvas.getContext('2d');
     var tileSwPt = new L.Point(tilePoint.x*256, (tilePoint.y*256)+256);
@@ -69,20 +68,15 @@ export default class RasterLayer extends CanvasTileLayer {
 
     
   colorForValue(val) {
-    console.log(val);
     if (val == this.props.raster.nodataval) {
       return {r: 0, g: 0, b: 0, a: 0 };
     }
     const raster = this.props.raster;
     const levels = raster.legend.levels;
     const numlevels = levels.length;
-    console.log(levels[0].value);
-    console.log(val <= levels[0].value);
     if (val <= levels[0].value) {
       return levels[0].color;
     }
-    console.log(levels[numlevels-1].value);
-    console.log(val >= levels[numlevels-1].value);
     if (val >= levels[numlevels-1].value) {
       return levels[numlevels-1].color;
     }
@@ -99,7 +93,6 @@ export default class RasterLayer extends CanvasTileLayer {
   }
 
   render() {
-    console.log(this.props.raster);
     var raster = this.props.raster;
     // create an image in the hidden canvas from the props
     var ctx = this.canvas.getContext('2d');

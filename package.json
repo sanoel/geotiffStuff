@@ -1,7 +1,7 @@
 {
-  "name": "TrialsTracker",
+  "name": "OptAgro Oil Palm App",
   "version": "0.1.0",
-  "description": "An app used to track farm yield trials",
+  "description": "An app used to display soil property data for an oil palm plantation",
   "main": "app/main.js",
   "repository": {
     "type": "git",
@@ -13,8 +13,7 @@
   ],
   "contributors": [
     "Sam Noel <sanoel@purdue.edu>",
-    "Yang Wang <wang701@purdue.edu>",
-    "Andrew Balmos <abalmos@purdue.edu>"
+    "Aaron Ault <aultac@gmail.com>"
   ],
   "license": "Apache 2.0",
   "bugs": {

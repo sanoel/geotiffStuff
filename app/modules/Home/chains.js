@@ -1,6 +1,10 @@
 import * as _ from 'lodash';
 import uuid from 'uuid';
 
+export var selectMapListItem = [
+  clearMap, setMapListItem
+];
+
 export var changeSortMode = [
   setSortMode
 ];
@@ -27,6 +31,14 @@ export var addNewNote = [
 export var changeShowHideState = [
   changeShowHide, 
 ];
+
+function clearMap ({state}) {
+ state.set(['home', 'model', 'selected_map_item'], {}); 
+};
+
+function setMapListItem ({input, state}) {
+ state.set(['home', 'model', 'selected_map_item'], input.mapItem); 
+};
 
 function changeShowHide ({input, state}) {
   var geometryVisible = state.get(['home', 'model', 'notes', input.id, 'geometry_visible']);
