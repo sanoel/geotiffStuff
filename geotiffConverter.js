@@ -4,9 +4,16 @@ exports.geotiff2json = function(filename) {
   var dataset = gdal.open(filename);
   var GT = dataset.geoTransform;
   var band = dataset.bands.get(1);
+  var stats = band.getStatistics(false, true);
   var pixels = band.pixels;
   var json = {
-    type: "RasterDataset",
+    nodataval: band.noDataValue,
+    legend: {
+      levels: [
+        { value: stats.min, color: { r: 255, g: 0, b: 0 } },
+        { value: stats.max, color: { r: 0, g: 255, b: 0 } }
+      ],
+    },
     geotransform: {
       topleft: { lat:GT[3] , lon:GT[0] },
       cellspacing: { lat: GT[5], lon: GT[1] },

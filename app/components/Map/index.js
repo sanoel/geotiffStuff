@@ -7,6 +7,7 @@ import styles from './map.css';
 @Cerebral((props) => {
   return {
     raster: [ 'home', 'raster' ],
+    ph: [ 'home', 'ph' ],
   };
 })
 
@@ -26,7 +27,7 @@ class _Map extends React.Component {
           />
           <Marker position={topLeft} />
           <Marker position={[bottom, right]} />
-          <RasterLayer raster={this.props.raster} />
+          <RasterLayer raster={this.props.ph.ph} />
         </Map> 
       </div>
     );

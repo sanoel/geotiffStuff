@@ -1,8 +1,12 @@
 import uuid from 'uuid';
+import ph from './ph_4326.js';
 
 var tree = {
 
+  ph: {ph},
+
   raster: {
+    nodataval: -9999, 
     legend: {
       levels: [
         { value: 0, color: { r: 255, g: 0, b: 0 } },
