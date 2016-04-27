@@ -1,0 +1,15 @@
+.sorting-tabs {
+  position: relative;
+  padding: 5px;
+  z-index: 1;
+  width: initial;
+}
+.sorting-tab {
+  width: 20%; 
+  font-size:medium;
+}
+.selected-sorting-tab {
+  width: 20%; 
+  font-size:medium;
+  font-weight:bold;
+}
