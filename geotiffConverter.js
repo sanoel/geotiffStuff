@@ -6,16 +6,51 @@ exports.geotiff2json = function(filename) {
   var band = dataset.bands.get(1);
   var stats = band.getStatistics(false, true);
   var pixels = band.pixels;
+
+
+  var legends = {
+    a: {
+      levels: [
+       { value: stats.min, color: { r: 255, g: 243, b: 204, a: 255} },
+       { value: stats.max, color: { r: 76,  g: 64,  b: 25,  a: 255 } }
+     ],
+   },
+
+
+   b: {
+     levels: [
+       { value: stats.min, color: { r: 255, g: 0,   b: 0, a: 255} },
+       { value: stats.max, color: { r: 0,   g: 255, b: 0, a: 255 } }
+     ],  
+   },
+
+   c: {
+     levels: [
+       { value: stats.min, color: { r: 0,   g: 0, b: 255, a: 255 } },
+       { value: stats.max, color: { r: 255, g: 0, b: 0,   a: 255 } }
+     ],
+   }
+  };
+
+  var listA = [ 'oc', 'clay', 'sand', 'silt' ];
+  var listB = [ 'b', 'ca', 'cec', 'cu', 'mg', 'mn', 'na', 'p', 'zn', 'ph' ];
+  var listC = [ 'al' ];
+  var legend;
+  
+  var name = filename.slice(14, -4);
+  if (listA.indexOf(name) > -1) {
+    legend = legends.a;
+  } else if (listB.indexOf(name) > -1) {
+    legend = legends.b;
+  } else if (listC.indexOf(name) > -1) {
+    legend = legends.c;
+  }
+
   var json = {
     nodataval: band.noDataValue,
-    name: 'pH',
-    units: 'Power of Hydrogen',
-    legend: {
-      levels: [
-        { value: stats.min, color: { r: 255, g: 0, b: 0 } },
-        { value: stats.max, color: { r: 0, g: 255, b: 0 } }
-      ],
-    },
+    name: name,
+    units: {},
+    legend: legend,
     geotransform: {
       topleft: { lat:GT[3] , lon:GT[0] },
       cellspacing: { lat: GT[5], lon: GT[1] },
@@ -29,7 +64,7 @@ exports.geotiff2json = function(filename) {
       json.data[j][i] = pixels.get(i,j);
     }
   }
-  var outFileName = filename.slice(0,-4)+'.json'; 
+  var outFileName = filename.slice(0, 10)+name+'.js'; 
   fs.writeFile(outFileName, 'export default ' + JSON.stringify(json), (err) => {
     if (err) throw err;
     console.log('Generated file ' + outFileName + ' from ' + filename);

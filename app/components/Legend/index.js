@@ -30,6 +30,9 @@ class Legend extends React.Component {
 
 
   render() {
+    console.log(this.props.mapList);
+    console.log(this.props.selectedMap);
+    console.log(this.props.mapList[this.props.selectedMap]);
     var levels = this.props.mapList[this.props.selectedMap].legend.levels;
     var numlevels = levels.length;
     this.container = document.getElementById('legend');

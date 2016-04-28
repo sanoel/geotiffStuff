@@ -1,39 +1,44 @@
 import uuid from 'uuid';
-import ph from './ph_4326.js';
+import classes from './soil_props/Classes.js';
+import ca from './soil_props/ca.js';
+import cec from './soil_props/cec.js';
+import b from './soil_props/b.js';
+import mg from './soil_props/mg.js';
+import cu from './soil_props/cu.js';
+import mn from './soil_props/mn.js';
+import om from './soil_props/om.js';
+import oc from './soil_props/oc.js';
+import clay from './soil_props/clay.js';
+import al from './soil_props/al.js';
+import p from './soil_props/p.js';
+//import ph from './soil_props/ph.js';
+//import s from './soil_props/s.js';
+//import sand from './soil_props/sand.js';
+//import silt from './soil_props/silt.js';
+//import zn from './soil_props/zn.js';
 
-var soil_props = {};
 
-var names = ['pH', 
-'Topographic Wetness Index',
-'Catchment Area',
-'Soil Water Retention Capacity',
-'Clay Mineralogy',
-'Soil Depth',
-'Electrical Conductivity',
-'Sand',
-'Silt',
-'Clay',
-'pH',
-'Organic Carbon',
-'Organic Matter',
-'CEC',
-'Nitrogen',
-'Phosphorous',
-'Potassium',
-'Calcium',
-'Sulfur',
-'Magnesium',
-'Sodium',
-'Boron',
-'Iron',
-'Copper',
-'Zinc',
-'Manganese'];
-
-for (var i = 0; i < 20; i++) {
-  soil_props[names[i]] = ph;
-  soil_props[names[i]].name = names[i];
-}
+var soil_props = {
+  OC: oc,
+  OM: om,
+  P: p,
+//  S: s,
+  Ca: ca,
+  Mg: mg,
+//  K: k,
+//  Na: na,
+  CEC: cec,
+  B: b,
+//  Fe: fe,
+  Cu: cu,
+  Mn: mn,
+//  Zn: zn,
+//  Sand: sand,
+//  Silt: silt,
+  Clay: clay,
+ // pH: ph,
+  Classes: classes,
+};
 
 var tree = {
 
@@ -44,7 +49,7 @@ var tree = {
   user_radius: {},
 
   model: {
-    selected_map: 'pH',
+    selected_map: 'Mg',
     selected_note: {},
     notes: initial_notes(), //initial_notes(),
     tags: initial_tags(),

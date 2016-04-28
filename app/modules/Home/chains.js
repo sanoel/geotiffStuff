@@ -44,11 +44,11 @@ function updateLocation({input, state}) {
 };
 
 function clearMap ({state}) {
-  state.set(['home', 'model', 'selected_map_item'], {}); 
+  state.set(['home', 'model', 'selected_map'], {}); 
 };
 
 function setMapListItem ({input, state}) {
- state.set(['home', 'model', 'selected_map_item'], input.mapItem); 
+ state.set(['home', 'model', 'selected_map'], input.mapItem); 
 };
 
 function changeShowHide ({input, state}) {

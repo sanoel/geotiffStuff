@@ -11,8 +11,7 @@ function blendColors(c1, c2, percent) {
     r: c1.r * percent + c2.r * (1-percent),
     g: c1.g * percent + c2.g * (1-percent),
     b: c1.b * percent + c2.b * (1-percent),
-    a: 128, 
-   // a:   a1 * percent +   a2 * (1-percent),
+    a:   a1 * percent +   a2 * (1-percent),
   };
 }
 
@@ -94,6 +93,7 @@ export default class RasterLayer extends CanvasTileLayer {
   }
 
   render() {
+    console.log(this.props.raster);
     var raster = this.props.raster;
     // create an image in the hidden canvas from the props
     var ctx = this.canvas.getContext('2d');
@@ -109,7 +109,7 @@ export default class RasterLayer extends CanvasTileLayer {
          data[((j*width+i)*4)]   = color.r; // red
          data[((j*width+i)*4)+1] = color.g; // green
          data[((j*width+i)*4)+2] = color.b; // blue
-         data[((j*width+i)*4)+3] = 255;     // alpha
+         data[((j*width+i)*4)+3] = color.a*255;     // alpha
       }
     } 
     ctx.putImageData(img, 0, 0);
