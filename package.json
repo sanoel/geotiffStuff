@@ -1,5 +1,5 @@
 {
-  "name": "OptAgro Oil Palm App",
+  "name": "OptAgroOilPalmApp",
   "version": "0.1.0",
   "description": "An app used to display soil property data for an oil palm plantation",
   "main": "app/main.js",

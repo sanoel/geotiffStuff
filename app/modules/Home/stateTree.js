@@ -2,20 +2,49 @@ import uuid from 'uuid';
 import ph from './ph_4326.js';
 
 var soil_props = {};
-var first_one;
+
+var names = ['pH', 
+'Topographic Wetness Index',
+'Catchment Area',
+'Soil Water Retention Capacity',
+'Clay Mineralogy',
+'Soil Depth',
+'Electrical Conductivity',
+'Sand',
+'Silt',
+'Clay',
+'pH',
+'Organic Carbon',
+'Organic Matter',
+'CEC',
+'Nitrogen',
+'Phosphorous',
+'Potassium',
+'Calcium',
+'Sulfur',
+'Magnesium',
+'Sodium',
+'Boron',
+'Iron',
+'Copper',
+'Zinc',
+'Manganese'];
+
 for (var i = 0; i < 20; i++) {
-  var name = uuid.v4(); //with actual data, change this to <soil property data object>.name
-  if (i == 0) first_one = name;
-  soil_props[name] = ph;
-  soil_props[name].name = name;
+  soil_props[names[i]] = ph;
+  soil_props[names[i]].name = names[i];
 }
 
 var tree = {
 
   map_list: soil_props,
+  
+  user_location: {},
+
+  user_radius: {},
 
   model: {
-    selected_map_item: first_one,
+    selected_map: 'pH',
     selected_note: {},
     notes: initial_notes(), //initial_notes(),
     tags: initial_tags(),

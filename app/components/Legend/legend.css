@@ -1,0 +1,22 @@
+.map-legend {
+  position: absolute;
+  bottom: 40px;
+  right: 15px;
+  width: 150px;
+  height: 60px;
+  background-color: #FFFFFF;
+  z-index: 5;
+}
+
+.legend-min {
+  position:absolute;
+  bottom: 7px;
+  right: 120px;
+}
+
+.legend-max {
+  position:absolute;
+  bottom: 7px;
+  right: 2px;
+  
+}

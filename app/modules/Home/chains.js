@@ -1,6 +1,10 @@
 import * as _ from 'lodash';
 import uuid from 'uuid';
 
+export var updateLocation = [
+  updateLocation
+];
+
 export var selectMapListItem = [
   clearMap, setMapListItem
 ];
@@ -32,8 +36,15 @@ export var changeShowHideState = [
   changeShowHide, 
 ];
 
+function updateLocation({input, state}) {
+  var radius = e.accuracy / 2;
+  state.set(['home', 'user_location'], e.latlng);
+  state.set(['home', 'user_gps_radius'], e.radius);
+  
+};
+
 function clearMap ({state}) {
- state.set(['home', 'model', 'selected_map_item'], {}); 
+  state.set(['home', 'model', 'selected_map_item'], {}); 
 };
 
 function setMapListItem ({input, state}) {
