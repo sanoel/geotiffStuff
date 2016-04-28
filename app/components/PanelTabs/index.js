@@ -17,25 +17,23 @@ class PanelTabs extends React.Component {
   render() {
 
     const signals = this.props.signals.home;
-    /*
-      <button type="button" className={styles[this.props.sortMode==='fields' ? 'selected-sorting-tab' : 'sorting-tab']} onClick={() => signals.sortingTabClicked({newSortMode: 'fields'})}>
-        Lots
-      </button>
-      <button type="button" className={styles[this.props.sortMode==='tags' ? 'selected-sorting-tab' : 'sorting-tab']} onClick={() => signals.sortingTabClicked({newSortMode: 'tags'})}>
-        Soil Analysis
-      </button> 
-      <button type="button" className={styles[this.props.sortMode==='tags' ? 'selected-sorting-tab' : 'sorting-tab']} onClick={() => signals.sortingTabClicked({newSortMode: 'tags'})}>
-        Foliar Analysis
-      </button> 
-      <button type="button" className={styles[this.props.sortMode==='tags' ? 'selected-sorting-tab' : 'sorting-tab']} onClick={() => signals.sortingTabClicked({newSortMode: 'tags'})}>
-         Info
-      </button>
-    */
 
     return ( 
-      <div className={styles['sorting-tabs']}>
-        <button type="button" className={styles[this.props.sortMode==='all' ? 'selected-sorting-tab' : 'sorting-tab']} onClick={() => signals.sortingTabClicked({newSortMode: 'all'})}>
+      <div className={styles['panel-tabs']}>
+        <button type="button" className={styles[this.props.sortMode==='Soil Maps' ? 'selected-panel-tab' : 'panel-tab']} onClick={() => signals.panelTabClicked({newSortMode: 'Soil Map'})}>
           Soil Maps
+        </button>
+        <button type="button" disabled className={styles[this.props.sortMode==='Lots' ? 'selected-panel-tab' : 'panel-tab']} onClick={() => signals.panelTabClicked({newSortMode: 'Lots'})}>
+          Lots
+        </button>
+        <button type="button" disabled className={styles[this.props.sortMode==='Soil Analysis' ? 'selected-panel-tab' : 'panel-tab']} onClick={() => signals.panelTabClicked({newSortMode: 'Soil Analysis'})}>
+          Soil Analysis
+        </button> 
+        <button type="button" disabled className={styles[this.props.sortMode==='Foliar Analysis' ? 'selected-panel-tab' : 'panel-tab']} onClick={() => signals.panelTabClicked({newSortMode: 'Foliar Analysis'})}>
+          Foliar Analysis
+        </button> 
+        <button type="button" disabled className={styles[this.props.sortMode==='Info' ? 'selected-panel-tab' : 'panel-tab']} onClick={() => signals.panelTabClicked({newSortMode: 'Info'})}>
+          Info
         </button>
       </div>
     );

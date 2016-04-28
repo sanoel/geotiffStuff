@@ -1,0 +1,9 @@
+.control-panel{
+  position: absolute;
+  top: 28px;
+  left: 0;
+  width: 35vw;
+  height: 100vh;
+  background-color: LightGray;
+  border-radius: 2px;
+}

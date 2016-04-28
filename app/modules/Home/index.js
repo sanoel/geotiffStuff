@@ -19,7 +19,7 @@ export default (options = {}) => {
         ...selectMapListItem
       ],
       
-      sortingTabClicked: [
+      panelTabClicked: [
       ...changeSortMode
       ],
 

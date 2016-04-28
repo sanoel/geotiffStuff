@@ -1,0 +1,19 @@
+.maplist {
+  position: relative;
+  padding: 3px;
+  width: initial;
+  height: 91.8vh;
+  background-color: LightGray;
+  border-style: solid;
+  border-radius: 2px;
+}
+
+.maplist-item {
+  font-size: larger;
+  margin: 3px;
+}
+
+.selected-maplist-item {
+  font-size: larger;
+  margin: 3px;
+}

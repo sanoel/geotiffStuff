@@ -1,14 +1,17 @@
-.sorting-tabs {
+.panel-tabs {
   position: relative;
-  padding: 5px;
+  border-style: solid;
+  border-radius: 2px;
+  padding: 3px;
   z-index: 1;
   width: initial;
 }
-.sorting-tab {
+.panel-tab {
   width: 20%; 
   font-size:medium;
+  
 }
-.selected-sorting-tab {
+.selected-panel-tab {
   width: 20%; 
   font-size:medium;
   font-weight:bold;

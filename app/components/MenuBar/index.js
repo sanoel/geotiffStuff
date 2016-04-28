@@ -20,7 +20,7 @@ class MenuBar extends React.Component {
     const signals = this.props.signals.home;
 
     return (
-      <div id='menu-bar'>
+      <div className={styles['menu-bar']}>
         <button type="button" className={styles['menu-button']} onClick={() => signals.addFieldButtonClicked()}>New Field</button>
         <button type="button" className={styles['menu-button']} onClick={() => signals.overflowMenuButtonClicked()}>Overflow Menu</button>
         <button type="button" className={styles['menu-button']} onClick={() => signals.importYieldDataButtonClicked}>Import Yield Data</button>
