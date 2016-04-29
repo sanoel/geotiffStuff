@@ -72,6 +72,20 @@ exports.geotiff2json = function(filename) {
   return json;
 };
 
+
+exports.parseLegendsXlsx = function(filename) {
+  jsonOut = {};
+  var _ = require('lodash');
+  var xlsx = require('xlsx');
+
+
+  var workbook = xlsx.readFile(filename);
+  _.each(workbook.Sheets, function(sheet, key) {
+    var json = xlsx.utils.sheet_to_json(sheet);
+  });
+};
+
+
 exports.makeGeoJsonPolygons = function(json, filename) {
   //var fs = require('fs');
   console.log("making polygons");
@@ -117,15 +131,7 @@ exports.makeGeoJsonPolygons = function(json, filename) {
   });
   return geojson;
 };
-/*
-crs: {
-          type: "link",
-          properties: {
-            href: "http://spatialreference.org/ref/sr-org/7483/esriwkt/",
-            type: "esriwkt"
-          }
-        }
-*/
+
 
 exports.makeGeoJsonPoints = function(json) {
   console.log('making points');

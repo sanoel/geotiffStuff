@@ -14,6 +14,7 @@
 }
 
 .selected-maplist-item {
+  background-color: DarkGray;
   font-size: larger;
   margin: 3px;
 }

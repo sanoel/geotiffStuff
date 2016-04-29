@@ -36,8 +36,15 @@ export default class RasterLayer extends CanvasTileLayer {
   componentWillUnmount() {
     this.canvas.remove();
   }
+  
+  componentDidUpdate() {
+    console.log(this.canvas);
+//    super.reset();
+//    super.update();
+  }
 
   drawTile(canvas, tilePoint, zoom) {
+    console.log('drawing a tile');
     var raster = this.props.raster;
     var ctx = canvas.getContext('2d');
     var tileSwPt = new L.Point(tilePoint.x*256, (tilePoint.y*256)+256);
@@ -93,7 +100,7 @@ export default class RasterLayer extends CanvasTileLayer {
   }
 
   render() {
-    console.log(this.props.raster);
+    console.log('raster render called!');
     var raster = this.props.raster;
     // create an image in the hidden canvas from the props
     var ctx = this.canvas.getContext('2d');
@@ -113,6 +120,7 @@ export default class RasterLayer extends CanvasTileLayer {
       }
     } 
     ctx.putImageData(img, 0, 0);
+    this.leafletElement.redraw();
     return super.render();
   }
 }

@@ -9,14 +9,27 @@ import styles from './map.css';
   return {
     mapList: ['home', 'map_list'],
     selectedMap: ['home', 'model', 'selected_map'],
-    user_location: ['home', 'user_location' ],
-    user_gps_radius: ['home', 'user_gps_radius' ],
+    userLocation: ['home', 'model', 'gps', 'user_location' ],
+    hasLocation: ['home', 'model', 'gps', 'has_location' ],
+    accuracy: ['home', 'model', 'gps', 'accuracy' ],
   };
 })
 
   
 
 class _Map extends React.Component {
+    
+  componentDidMount() {
+    this.refs.map.leafletElement.locate();
+  }
+
+  handleError(e) {
+    console.log(e);
+  }
+
+  handleLocationFound(e) {
+    console.log(e);
+  }
 
   render() {
     var raster = this.props.mapList[this.props.selectedMap];
@@ -25,35 +38,35 @@ class _Map extends React.Component {
     var right = raster.geotransform.topleft.lon + raster.geotransform.cellspacing.lon * raster.data[0].length;
     var position = [4.6,-72.8];
 
-    var circle;
-    var marker;
+    const marker = this.props.hasLocation
+      ? <Marker
+          position={this.props.userLocation}
+        />
+      : null;
 
-    if (this.props.user_location) {
-      marker = 
-        <Marker
-          position={this.props.user_location}
-        />;
-      if(this.props.user_gps_radius) {
-        circle = 
-        <Circle
-          center={this.props.user_location}
-          radius={this.props.user_gps_radius}
-        />;
-      }
-    }
+    const circle = this.props.hasLocation
+      ? <Circle
+          center={this.props.userLocation}
+          radius={this.props.accuracy / 2}
+        />
+      : null;
     
+    const signals = this.props.signals.home;
+    console.log('map rendering!');
     return (
       <div id='map-panel'>
         <Legend 
           width={150}
           height={60}
         />
-        <Map 
+        <Map
+          ref='map' 
+          setView={true}
           dragging={true} 
           center={position} 
           zoom={11}
-          onLocationFound={(e) => signals.locationFound({evt: e})}
-          onLocationError={console.log('location error')}>
+          onLocationfound={(e) => {signals.locationFound({latlng:e.latlng, accuracy:e.accuracy})}}
+          locationError={console.log("Location Error!")}>
           <TileLayer
             url='http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}'
             attribution='Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
@@ -61,6 +74,7 @@ class _Map extends React.Component {
           <RasterLayer 
             raster={this.props.mapList[this.props.selectedMap]} 
           />
+          {circle}
         </Map> 
       </div>
     );

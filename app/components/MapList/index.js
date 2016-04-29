@@ -7,7 +7,8 @@ import styles from './maplist.css';
 
 @Cerebral((props) => {
   return {
-    soil_prop_maps: ['home', 'map_list' ],
+    mapList: [ 'home', 'map_list' ],
+    selectedMap: [ 'home', 'model', 'selected_map' ],
   };
 })
 
@@ -20,18 +21,27 @@ class MapList extends React.Component {
     const signals = this.props.signals.home;
     var self = this;
 
-    var map_list = [];
-    _.each(self.props.soil_prop_maps, function(map, key) {
-      map_list.push(<div 
-        key={uuid.v4()} 
-        className={styles['maplist-item']}
-        onClick={() => signals.mapListItemClicked({mapItem:key})}>
-        {key}
-      </div>);
+    var maps = [];
+    _.each(self.props.mapList, function(map, key) {
+      if (key == self.props.selectedMap) {
+        maps.push(<div 
+          key={uuid.v4()} 
+          className={styles['selected-maplist-item']}
+          onClick={() => signals.mapListItemClicked({mapItem:key})}>
+          {key}
+        </div>);
+      } else {
+        maps.push(<div 
+          key={uuid.v4()} 
+          className={styles['maplist-item']}
+          onClick={() => signals.mapListItemClicked({mapItem:key})}>
+          {key}
+        </div>);
+      }
     });
     return (
       <div className={styles['maplist']}>
-        {map_list}
+        {maps}
       </div>
     );
   }

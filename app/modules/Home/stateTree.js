@@ -10,7 +10,7 @@ import om from './soil_props/om.js';
 import oc from './soil_props/oc.js';
 import clay from './soil_props/clay.js';
 import al from './soil_props/al.js';
-import p from './soil_props/p.js';
+//import p from './soil_props/p.js';
 //import ph from './soil_props/ph.js';
 //import s from './soil_props/s.js';
 //import sand from './soil_props/sand.js';
@@ -21,7 +21,7 @@ import p from './soil_props/p.js';
 var soil_props = {
   OC: oc,
   OM: om,
-  P: p,
+//  P: p,
 //  S: s,
   Ca: ca,
   Mg: mg,
@@ -44,11 +44,12 @@ var tree = {
 
   map_list: soil_props,
   
-  user_location: {},
-
-  user_radius: {},
-
   model: {
+    gps: {
+      has_location: false,
+      user_location: {},
+      accuracy: {},
+    },
     selected_map: 'Mg',
     selected_note: {},
     notes: initial_notes(), //initial_notes(),
