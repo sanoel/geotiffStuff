@@ -1,0 +1,6 @@
+{
+  "name": "OptAgro - v0.1",
+  "description": "Version 0.1 of OptAgro map viewer.",
+  "repository": "https://github.com/sanoel/geotiffStuff",
+  "image": "heroku/nodejs"
+}

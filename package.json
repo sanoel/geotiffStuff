@@ -5,7 +5,7 @@
   "main": "app/main.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/openatk/trialstracker"
+    "url": "https://github.com/sanoel/geotiffStuff"
   },
   "keywords": [
     "trial",
@@ -37,6 +37,7 @@
     "geodesy": "^1.1.0",
     "geojson-vt": "^2.1.8",
     "hsl-to-rgb": "^1.0.0",
+    "kotatsu": "^0.10.0",
     "leaflet": "^0.7.7",
     "lodash": "^4.5.1",
     "react": "^0.14.7",
