@@ -1,4 +1,11 @@
+var CopyWebpackPlugin = require('copy-webpack-plugin');
+
 module.exports = {
+  entry: "./app/main.js",
+  output: {
+    path: __dirname + "/dist",
+    filename: "bundle.js"
+  },
   module: {
     loaders: [{
       test: /\.css?$/,
@@ -9,7 +16,7 @@ module.exports = {
       exclude: /node_modules/,
       loader: 'babel',
       query: {
-        "presets": ["react", "es2015", "stage-0", "react-hmre"],
+        "presets": ["react", "es2015", "stage-0" ],//, "react-hmre"],
         "plugins": [
           ["transform-decorators-legacy"]
         ]
@@ -22,5 +29,10 @@ module.exports = {
   },
   postcss: [
     require('autoprefixer')
-  ]
+  ],
+  plugins: [
+    new CopyWebpackPlugin([
+      { from: './index.html', to: 'index.html' }, // copies index.html to dist/index.html
+    ]),
+  ],
 };
