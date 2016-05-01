@@ -5,7 +5,7 @@
   "main": "app/main.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/openatk/trialstracker"
+    "url": "https://github.com/sanoel/geotiffStuff"
   },
   "keywords": [
     "trial",
@@ -22,10 +22,16 @@
   "homepage": "https://github.com/openatk/trailstracker",
   "scripts": {
     "start": "cross-env kotatsu serve app/main.js --index index.html --config webpack.config.js --devtool eval-source-map",
-    "build": "cross-env NODE_ENV=production kotatsu build client app/main.js --config webpack.production.config.js --minify -o dist/client_bundle.js "
+    "build": "cross-env NODE_ENV=production kotatsu build client app/main.js --config webpack.production.config.js --minify -o dist/client_bundle.js ",
+    "build-run-prod": "NODE_ENV=production webpack && npm run start-prod",
+    "start-prod": "NODE_ENV=production node server.js"
   },
   "dependencies": {
     "autoprefixer": "^6.3.3",
+    "babel-plugin-transform-decorators-legacy": "^1.3.4",
+    "babel-preset-react": "^6.5.0",
+    "babel-preset-react-hmre": "^1.1.0",
+    "babel-preset-stage-0": "^6.5.0",
     "baobab": "^2.3.3",
     "cerebral": "^0.33.24",
     "cerebral-addons": "^0.4.10",
@@ -33,29 +39,26 @@
     "cerebral-module-devtools": "^0.5.3",
     "cerebral-module-router": "^0.12.5",
     "cerebral-view-react": "^0.11.6",
+    "concurrently": "^2.0.0",
+    "copy-webpack-plugin": "^2.1.3",
+    "cross-env": "^1.0.7",
+    "css-loader": "^0.23.1",
+    "express": "^4.13.4",
     "file-loader": "^0.8.5",
     "geodesy": "^1.1.0",
     "geojson-vt": "^2.1.8",
     "hsl-to-rgb": "^1.0.0",
+    "kotatsu": "^0.10.0",
     "leaflet": "^0.7.7",
     "lodash": "^4.5.1",
+    "postcss-loader": "^0.8.1",
     "react": "^0.14.7",
     "react-dom": "^0.14.7",
     "react-leaflet": "^0.10.0",
     "react-textarea-autosize": "^3.3.0",
+    "style-loader": "^0.13.0",
     "url-loader": "^0.5.7",
     "uuid": "^2.0.1"
   },
-  "devDependencies": {
-    "babel-plugin-transform-decorators-legacy": "^1.3.4",
-    "babel-preset-react": "^6.5.0",
-    "babel-preset-react-hmre": "^1.1.0",
-    "babel-preset-stage-0": "^6.5.0",
-    "concurrently": "^2.0.0",
-    "cross-env": "^1.0.7",
-    "css-loader": "^0.23.1",
-    "kotatsu": "^0.10.0",
-    "postcss-loader": "^0.8.1",
-    "style-loader": "^0.13.0"
-  }
+  "devDependencies": {}
 }
