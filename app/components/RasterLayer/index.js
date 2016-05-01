@@ -37,14 +37,7 @@ export default class RasterLayer extends CanvasTileLayer {
     this.canvas.remove();
   }
   
-  componentDidUpdate() {
-    console.log(this.canvas);
-//    super.reset();
-//    super.update();
-  }
-
   drawTile(canvas, tilePoint, zoom) {
-    console.log('drawing a tile');
     var raster = this.props.raster;
     var ctx = canvas.getContext('2d');
     var tileSwPt = new L.Point(tilePoint.x*256, (tilePoint.y*256)+256);
@@ -74,7 +67,7 @@ export default class RasterLayer extends CanvasTileLayer {
   }
 
     
-  colorForValue(val) {
+  colorForvalue(val) {
     if (val == this.props.raster.nodataval) {
       return {r: 0, g: 0, b: 0, a: 0 };
     }
@@ -100,7 +93,6 @@ export default class RasterLayer extends CanvasTileLayer {
   }
 
   render() {
-    console.log('raster render called!');
     var raster = this.props.raster;
     // create an image in the hidden canvas from the props
     var ctx = this.canvas.getContext('2d');
@@ -112,7 +104,7 @@ export default class RasterLayer extends CanvasTileLayer {
     var data = img.data;
     for (var j = 0; j < height; j++) {
       for (var i = 0; i < width; i++) {
-         let color = this.colorForValue(raster.data[j][i]);
+         let color = this.colorForvalue(raster.data[j][i]);
          data[((j*width+i)*4)]   = color.r; // red
          data[((j*width+i)*4)+1] = color.g; // green
          data[((j*width+i)*4)+2] = color.b; // blue

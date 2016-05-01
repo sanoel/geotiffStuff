@@ -1,4 +1,4 @@
-exports.geotiff2json = function(filename) {
+exports.geotiff2json = function(filename, legend) {
   var gdal = require('gdal');
   var fs = require("fs");
   var dataset = gdal.open(filename);
@@ -7,50 +7,21 @@ exports.geotiff2json = function(filename) {
   var stats = band.getStatistics(false, true);
   var pixels = band.pixels;
 
-
-  var legends = {
-    a: {
-      levels: [
-       { value: stats.min, color: { r: 255, g: 243, b: 204, a: 255} },
-       { value: stats.max, color: { r: 76,  g: 64,  b: 25,  a: 255 } }
-     ],
-   },
-
-
-   b: {
-     levels: [
-       { value: stats.min, color: { r: 255, g: 0,   b: 0, a: 255} },
-       { value: stats.max, color: { r: 0,   g: 255, b: 0, a: 255 } }
-     ],  
-   },
-
-   c: {
-     levels: [
-       { value: stats.min, color: { r: 0,   g: 0, b: 255, a: 255 } },
-       { value: stats.max, color: { r: 255, g: 0, b: 0,   a: 255 } }
-     ],
-   }
-  };
-
-  var listA = [ 'oc', 'clay', 'sand', 'silt' ];
-  var listB = [ 'b', 'ca', 'cec', 'cu', 'mg', 'mn', 'na', 'p', 'zn', 'ph' ];
-  var listC = [ 'al' ];
-  var legend;
-  
   var name = filename.slice(14, -4);
-  if (listA.indexOf(name) > -1) {
-    legend = legends.a;
-  } else if (listB.indexOf(name) > -1) {
-    legend = legends.b;
-  } else if (listC.indexOf(name) > -1) {
-    legend = legends.c;
+  if (legend.levels[0].value == 'low') {
+    legend.levels[0].value = stats.min;
+  }
+  if (legend.levels[legend.levels.length-1].value == 'high') {
+    legend.levels[legend.levels.length-1].value = stats.max;
   }
 
   var json = {
     nodataval: band.noDataValue,
-    name: name,
-    units: {},
-    legend: legend,
+    name: legend.name,
+    units: legend.units,
+    legend: {
+      levels: legend.levels,
+    },
     geotransform: {
       topleft: { lat:GT[3] , lon:GT[0] },
       cellspacing: { lat: GT[5], lon: GT[1] },
@@ -77,12 +48,51 @@ exports.parseLegendsXlsx = function(filename) {
   jsonOut = {};
   var _ = require('lodash');
   var xlsx = require('xlsx');
-
-
   var workbook = xlsx.readFile(filename);
+  var legends = [];
+  var masterList = xlsx.utils.sheet_to_json(workbook.Sheets.MasterMaps);
+ 
   _.each(workbook.Sheets, function(sheet, key) {
     var json = xlsx.utils.sheet_to_json(sheet);
+    if (key != 'MasterMaps') { 
+      var otherStuff;
+      for (var i = 0; i < masterList.length; i++) {
+        if (masterList[i].Name == key) {
+          otherStuff = masterList[i];
+          break;
+        }
+      }
+      var units = otherStuff.Units;
+      var obj = [];
+      for (var i = 0; i < json.length; i++) {
+        var color = {
+          r: json[i].r,
+          g: json[i].g,
+          b: json[i].b,
+          a: json[i].a,
+        }
+        var value;
+        if (json[i].value == 'high' || json[i].value == 'low') {
+          value = json[i].value;
+        } else {
+          value = parseFloat(json[i].value);
+        }
+        console.log(value);
+        console.log(typeof value);
+        obj.push({ 
+          value: value,
+          color: color,
+        }); 
+      }
+      var filename = otherStuff.Filename;
+      legends[filename] = {
+        name: key,
+        levels: obj,
+        units: units,
+      };
+    }
   });
+  return legends;
 };
 
 
@@ -134,7 +144,6 @@ exports.makeGeoJsonPolygons = function(json, filename) {
 
 
 exports.makeGeoJsonPoints = function(json) {
-  console.log('making points');
   var geojson = {
     type: "FeatureCollection",
     features: []
@@ -214,10 +223,7 @@ exports.polygonize = function(filename, numBins) {
     pixValField: 0,
   }); 
   geojsonData.layers.get(0).features.forEach(function(feature, i) {
-   console.log(feature.getGeometry()); 
   });
-  console.log(geojsonData.layers.get(0).features.count());
-  console.log(geojsonData.layers.get(0));
 };
 
 exports.buildImage = function(json) {
@@ -264,7 +270,6 @@ exports.buildImage = function(json) {
         }
       }
     }
-    console.log(image);
     image.writeFile('outfile.png', 'png', function(err){}); 
     return image;
   });

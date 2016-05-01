@@ -4,23 +4,24 @@ import ca from './soil_props/ca.js';
 import cec from './soil_props/cec.js';
 import b from './soil_props/b.js';
 import mg from './soil_props/mg.js';
-import cu from './soil_props/cu.js';
-import mn from './soil_props/mn.js';
-import om from './soil_props/om.js';
-import oc from './soil_props/oc.js';
-import clay from './soil_props/clay.js';
-import al from './soil_props/al.js';
+//import cu from './soil_props/cu.js';
+//import mn from './soil_props/mn.js';
+//import om from './soil_props/om.js';
+//import oc from './soil_props/oc.js';
+//import clay from './soil_props/clay.js';
+//import al from './soil_props/al.js';
 //import p from './soil_props/p.js';
 //import ph from './soil_props/ph.js';
 //import s from './soil_props/s.js';
 //import sand from './soil_props/sand.js';
 //import silt from './soil_props/silt.js';
-//import zn from './soil_props/zn.js';
+import zn from './soil_props/zn.js';
 
+import lots from './Lots.js';
 
 var soil_props = {
-  OC: oc,
-  OM: om,
+//  OC: oc,
+//  OM: om,
 //  P: p,
 //  S: s,
   Ca: ca,
@@ -30,12 +31,12 @@ var soil_props = {
   CEC: cec,
   B: b,
 //  Fe: fe,
-  Cu: cu,
-  Mn: mn,
-//  Zn: zn,
+//  Cu: cu,
+//  Mn: mn,
+  Zn: zn,
 //  Sand: sand,
 //  Silt: silt,
-  Clay: clay,
+//  Clay: clay,
  // pH: ph,
   Classes: classes,
 };
@@ -43,6 +44,8 @@ var soil_props = {
 var tree = {
 
   map_list: soil_props,
+
+  lots: lots,
   
   model: {
     gps: {

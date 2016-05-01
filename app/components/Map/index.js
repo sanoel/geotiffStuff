@@ -1,17 +1,18 @@
 import React, { Proptypes } from 'react';
 import { Decorator as Cerebral, Link } from 'cerebral-view-react';
-import { Circle, Polygon, Marker, Map, TileLayer, ImageOverlay, latLng, latLngBounds} from 'react-leaflet';
+import { GeoJSON, Circle, Polygon, Marker, Map, TileLayer, ImageOverlay, latLng, latLngBounds} from 'react-leaflet';
 import RasterLayer from '../RasterLayer';
 import Legend from '../Legend';
 import styles from './map.css';
 
 @Cerebral((props) => {
   return {
-    mapList: ['home', 'map_list'],
-    selectedMap: ['home', 'model', 'selected_map'],
-    userLocation: ['home', 'model', 'gps', 'user_location' ],
-    hasLocation: ['home', 'model', 'gps', 'has_location' ],
-    accuracy: ['home', 'model', 'gps', 'accuracy' ],
+    mapList: [ 'home', 'map_list' ],
+    selectedMap: [ 'home', 'model', 'selected_map' ],
+    userLocation: [ 'home', 'model', 'gps', 'user_location' ],
+    hasLocation: [ 'home', 'model', 'gps', 'has_location' ],
+    accuracy: [ 'home', 'model', 'gps', 'accuracy' ],
+    lots: [ 'home', 'lots' ],
   };
 })
 
@@ -24,11 +25,9 @@ class _Map extends React.Component {
   }
 
   handleError(e) {
-    console.log(e);
   }
 
   handleLocationFound(e) {
-    console.log(e);
   }
 
   render() {
@@ -52,13 +51,11 @@ class _Map extends React.Component {
       : null;
     
     const signals = this.props.signals.home;
-    console.log('map rendering!');
+    var lotsJson = JSON.stringify(this.props.lots);
+    console.log(this.props.mapList);
+    console.log(this.props.mapList[this.props.selectedMap]);
     return (
       <div id='map-panel'>
-        <Legend 
-          width={150}
-          height={60}
-        />
         <Map
           ref='map' 
           setView={true}
@@ -75,6 +72,7 @@ class _Map extends React.Component {
             raster={this.props.mapList[this.props.selectedMap]} 
           />
           {circle}
+          <Legend position={'bottomright'}/>
         </Map> 
       </div>
     );
