@@ -12,8 +12,6 @@ import uuid from 'uuid';
   };
 })
 
-  
-
 class Legend extends MapControl {
   
   blendColors(c1, c2, percent) {

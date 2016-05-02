@@ -23,7 +23,6 @@ class ControlPanel extends React.Component {
 
     return (
       <div className={styles['control-panel']}>
-        <PanelTabs />
         <MapList />
       </div>
     );

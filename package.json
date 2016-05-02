@@ -24,7 +24,7 @@
     "start": "cross-env kotatsu serve app/main.js --index index.html --config webpack.config.js --devtool eval-source-map",
     "build": "cross-env NODE_ENV=production kotatsu build client app/main.js --config webpack.production.config.js --minify -o dist/client_bundle.js ",
     "build-run-prod": "NODE_ENV=production webpack && npm run start-prod",
-    "start-prod": "NODE_ENV=production node server.js"
+    "start-prod": "NODE_ENV=production node server.js "
   },
   "dependencies": {
     "autoprefixer": "^6.3.3",
