@@ -17,11 +17,11 @@
   ],
   "license": "Apache 2.0",
   "bugs": {
-    "url": "https://github.com/openatk/trailstracker/issues"
+    "url": "https://github.com/sanoel/geotiffStuff/issues"
   },
-  "homepage": "https://github.com/openatk/trailstracker",
+  "homepage": "https://github.com/sanoel/geotiffStuff",
   "scripts": {
-    "start": "cross-env kotatsu serve app/main.js --index index.html --config webpack.config.js --devtool eval-source-map",
+    "start": "node server.js",
     "build": "cross-env NODE_ENV=production kotatsu build client app/main.js --config webpack.production.config.js --minify -o dist/client_bundle.js ",
     "build-run-prod": "NODE_ENV=production webpack && npm run start-prod",
     "start-prod": "NODE_ENV=production node server.js "

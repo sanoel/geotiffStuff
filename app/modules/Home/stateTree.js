@@ -16,7 +16,6 @@ import s from './soil_props/s.js';
 import sand from './soil_props/sand.js';
 import silt from './soil_props/silt.js';
 import zn from './soil_props/zn.js';
-
 import lots from './Lots.js';
 
 var soil_props = {
@@ -26,11 +25,8 @@ var soil_props = {
   S: s,
   Ca: ca,
   Mg: mg,
-  K: k,
-  Na: na,
   CEC: cec,
   B: b,
-  Fe: fe,
   Cu: cu,
   Mn: mn,
   Zn: zn,

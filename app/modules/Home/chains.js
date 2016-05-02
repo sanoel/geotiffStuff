@@ -36,6 +36,10 @@ export var changeShowHideState = [
   changeShowHide, 
 ];
 
+export var removeMaps = [
+  clearMap
+]
+
 function setNewLocation({input, state}) {
   state.set(['home', 'model', 'gps', 'has_location'], true);
   state.set(['home', 'model', 'gps', 'user_location'], input.latlng);

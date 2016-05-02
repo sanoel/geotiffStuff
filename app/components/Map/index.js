@@ -1,9 +1,10 @@
 import React, { Proptypes } from 'react';
 import { Decorator as Cerebral, Link } from 'cerebral-view-react';
-import { GeoJSON, Circle, Polygon, Marker, Map, TileLayer, ImageOverlay, latLng, latLngBounds} from 'react-leaflet';
+import { GeoJson, Circle, Polygon, Marker, Map, TileLayer, ImageOverlay, latLng, latLngBounds} from 'react-leaflet';
 import RasterLayer from '../RasterLayer';
 import Legend from '../Legend';
 import styles from './map.css';
+import uuid from 'uuid';
 
 @Cerebral((props) => {
   return {
@@ -51,9 +52,13 @@ class _Map extends React.Component {
       : null;
     
     const signals = this.props.signals.home;
-    var lotsJson = JSON.stringify(this.props.lots);
-    console.log(this.props.mapList);
-    console.log(this.props.mapList[this.props.selectedMap]);
+    var lotsGeoJson = <GeoJson 
+      data={this.props.lots} 
+      color={'#000000'}
+      weight={1}  
+      fillOpacity={0.0}
+      key={uuid.v4()} 
+    />;
     return (
       <div id='map-panel'>
         <Map
@@ -64,16 +69,14 @@ class _Map extends React.Component {
           zoom={11}
           onLocationfound={(e) => {signals.locationFound({latlng:e.latlng, accuracy:e.accuracy})}}
           locationError={console.log("Location Error!")}>
-          <GeoJSON data={lots} />
           <TileLayer
             url='http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}'
             attribution='Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
           />
-          <RasterLayer 
-            raster={this.props.mapList[this.props.selectedMap]} 
-          />
+          {lotsGeoJson}
+          <RasterLayer raster={this.props.mapList[this.props.selectedMap]} />
           {circle}
-          <Legend position={'bottomright'}/>
+          <Legend position={'bottomright'} />
         </Map> 
       </div>
     );

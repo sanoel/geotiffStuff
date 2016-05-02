@@ -40,7 +40,6 @@ class Legend extends MapControl {
       var startColor = levels[i].color;
       var endColor = levels[i+1].color;
       var st = {background: 'linear-gradient(to bottom,'+ Color(levels[i].color).hexString()+','+ Color(levels[i+1].color).hexString()+')'};
-      console.log(typeof levels[i].value);
       var label = levels[i].value.toFixed(2).toString() + (levels[i + 1] ? '-' + levels[i + 1].value.toFixed(2).toString() : '+');
       var brk = levels[i+1] ? <br/> : {};
       legendPieces.push(

@@ -38,10 +38,14 @@ class MapList extends React.Component {
           {key}
         </div>);
       }
+      maps.push(<hr key={uuid.v4()}/>);
     });
     return (
       <div className={styles['maplist']}>
         {maps}
+        <button type="button" onClick={() => {signals.clearMapButtonClicked()}}>
+          Clear Map
+        </button>
       </div>
     );
   }

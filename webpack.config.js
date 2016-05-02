@@ -1,4 +1,4 @@
-var CopyWebpackPlugin = require('copy-webpack-plugin');
+//var CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   entry: "./app/main.js",
@@ -30,9 +30,9 @@ module.exports = {
   postcss: [
     require('autoprefixer')
   ],
-  plugins: [
-    new CopyWebpackPlugin([
-      { from: './index.html', to: 'index.html' }, // copies index.html to dist/index.html
-    ]),
-  ],
+//  plugins: [
+//    new CopyWebpackPlugin([
+//      { from: './index.html', to: 'index.html' }, // copies index.html to dist/index.html
+//    ]),
+//  ],
 };
