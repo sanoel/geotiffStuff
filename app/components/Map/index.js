@@ -32,10 +32,6 @@ class _Map extends React.Component {
   }
 
   render() {
-    var raster = this.props.mapList[this.props.selectedMap];
-    var topLeft = [raster.geotransform.topleft.lat, raster.geotransform.topleft.lon];
-    var bottom = raster.geotransform.topleft.lat + raster.geotransform.cellspacing.lat * raster.data.length;
-    var right = raster.geotransform.topleft.lon + raster.geotransform.cellspacing.lon * raster.data[0].length;
     var position = [4.6,-72.8];
 
     const marker = this.props.hasLocation
@@ -59,6 +55,8 @@ class _Map extends React.Component {
       fillOpacity={0.0}
       key={uuid.v4()} 
     />;
+    var rasterLayer = (!_.isEmpty(this.props.selectedMap)) ? (<RasterLayer raster={this.props.mapList[this.props.selectedMap]} />) : (null);
+    var legend = (!_.isEmpty(this.props.selectedMap)) ? (<Legend position={'bottomright'} />) : (null);
     return (
       <div id='map-panel'>
         <Map
@@ -69,14 +67,17 @@ class _Map extends React.Component {
           zoom={11}
           onLocationfound={(e) => {signals.locationFound({latlng:e.latlng, accuracy:e.accuracy})}}
           locationError={console.log("Location Error!")}>
+
           <TileLayer
             url='http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}'
             attribution='Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
           />
-          {lotsGeoJson}
+     
           <RasterLayer raster={this.props.mapList[this.props.selectedMap]} />
+
+          {lotsGeoJson}
           {circle}
-          <Legend position={'bottomright'} />
+          {legend}
         </Map> 
       </div>
     );

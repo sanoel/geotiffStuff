@@ -1,6 +1,7 @@
 import React, { Proptypes } from 'react';
 import { Decorator as Cerebral } from 'cerebral-view-react';
 import { MapControl } from 'react-leaflet';
+import { control } from 'leaflet';
 import styles from './legend.css';
 import Color from 'color';
 import uuid from 'uuid';
@@ -23,6 +24,10 @@ class Legend extends MapControl {
       b: c1.b * percent + c2.b * (1-percent),
       a:   a1 * percent +   a2 * (1-percent),
     };
+  }
+
+  componentWillMount() {
+    this.leafletElement = control.attribution(this.props);
   }
 
   render() {

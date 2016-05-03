@@ -48,7 +48,7 @@ function setNewLocation({input, state}) {
 };
 
 function clearMap ({state}) {
-  state.set(['home', 'model', 'selected_map'], {}); 
+  state.set(['home', 'model', 'selected_map'], null); 
 };
 
 function setMapListItem ({input, state}) {

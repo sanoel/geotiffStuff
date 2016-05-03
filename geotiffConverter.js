@@ -35,11 +35,11 @@ exports.geotiff2json = function(filename, legend) {
       json.data[j][i] = pixels.get(i,j);
     }
   }
-  var outFileName = filename.slice(0, 10)+name+'.js'; 
-  fs.writeFile(outFileName, 'export default ' + JSON.stringify(json), (err) => {
-    if (err) throw err;
-    console.log('Generated file ' + outFileName + ' from ' + filename);
-  });
+  //var outFileName = filename.slice(0, 10)+name+'.js'; 
+  //fs.writeFile(outFileName, 'export default ' + JSON.stringify(json), (err) => {
+  //  if (err) throw err;
+  //  console.log('Generated file ' + outFileName + ' from ' + filename);
+  //});
   return json;
 };
 
@@ -77,8 +77,6 @@ exports.parseLegendsXlsx = function(filename) {
         } else {
           value = parseFloat(json[i].value);
         }
-        console.log(value);
-        console.log(typeof value);
         obj.push({ 
           value: value,
           color: color,
@@ -98,7 +96,6 @@ exports.parseLegendsXlsx = function(filename) {
 
 exports.makeGeoJsonPolygons = function(json, filename) {
   //var fs = require('fs');
-  console.log("making polygons");
   var geojson = {
     type: "FeatureCollection",
     features: []
