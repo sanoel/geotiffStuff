@@ -2,7 +2,7 @@
   position: relative;
   padding: 3px;
   width: initial;
-  height: 91.8vh;
+  height: 98vh;
   background-color: #FFFFFF;
 }
 
@@ -16,7 +16,7 @@
 .selected-maplist-item {
   font-size: larger;
   font-family: sans-serif;
-  color: #444444;
+  color: #FF0000;
   margin: 8px;
 }
 
