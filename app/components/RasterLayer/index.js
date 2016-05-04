@@ -2,7 +2,46 @@ import { Decorator as Cerebral } from 'cerebral-view-react';
 import { CanvasTileLayer, Point } from 'react-leaflet';
 import React from 'react';
 import styles from './style.css';
-import InternalTileLayer from './RasterLayerInternalTileLayer';
+//import allMaps from './all_maps.js';
+
+import co from './co.js';
+import mo from './mo.js';
+import b from './b.js';
+import cice from './cice.js';
+import clay from './clay.js';
+import sand from './sand.js';
+import silt from './silt.js';
+import ca from './ca.js';
+import mg from './mg.js';
+import mn from './mn.js';
+import na from './na.js';
+import fe from './fe.js';
+import al from './al.js';
+import k from './k.js';
+import p from './p.js';
+import ph from './ph.js';
+import zn from './zn.js';
+import classes from './classes.js';
+
+var allMaps = {};
+allMaps['C.O.'] = co;
+allMaps['M.O.'] = mo;
+allMaps['P'] = p;
+allMaps['Ca'] = ca;
+allMaps['Mg'] = mg;
+allMaps['CICE'] = cice;
+allMaps['B'] = b;
+allMaps['Na'] = na;
+allMaps['Fe'] = fe;
+allMaps['Mn'] = mn;
+allMaps['Zn'] = zn;
+allMaps['K'] = k;
+allMaps['Al'] = al;
+allMaps['Sand'] = sand;
+allMaps['Silt'] = silt;
+allMaps['Clay'] = clay;
+allMaps['Class'] = classes;
+allMaps['pH'] = ph;
 
 function blendColors(c1, c2, percent) {
   let a1 = (typeof c1.a === 'undefined') ? 255 : c1.a; // Defualt opaque
@@ -17,6 +56,7 @@ function blendColors(c1, c2, percent) {
 
 @Cerebral((props) => {
   return {
+    selectedMap: [ 'home', 'model', 'selected_map' ],
   };
 })
 
@@ -25,8 +65,8 @@ export default class RasterLayer extends CanvasTileLayer {
   componentWillMount() {
     this.container = document.getElementById('hidden-stuff');
     this.canvas = document.createElement('canvas');
-    this.canvas.style.visibility = 'hidden';
-    this.canvas.style.zIndex = 3;
+    this.canvas.style.visibility = 'visible';
+    this.canvas.style.zIndex = 80;
     this.container.appendChild(this.canvas);
 
     super.componentWillMount();
@@ -38,8 +78,9 @@ export default class RasterLayer extends CanvasTileLayer {
   }
   
   drawTile(canvas, tilePoint, zoom) {
-    var raster = this.props.raster;
-    if (raster) {
+    if (this.props.selectedMap) {
+    var raster = allMaps[this.props.selectedMap]; 
+    console.log(raster);
     var ctx = canvas.getContext('2d');
     var tileSwPt = new L.Point(tilePoint.x*256, (tilePoint.y*256)+256);
     var tileNePt = new L.Point((tilePoint.x*256)+256, tilePoint.y*256);
@@ -70,10 +111,10 @@ export default class RasterLayer extends CanvasTileLayer {
 
     
   colorForvalue(val) {
-    if (val == this.props.raster.nodataval) {
+    const raster = allMaps[this.props.selectedMap];
+    if (val == raster.nodataval) {
       return {r: 0, g: 0, b: 0, a: 0 };
     }
-    const raster = this.props.raster;
     const levels = raster.legend.levels;
     const numlevels = levels.length;
     if (val <= levels[0].value) {
@@ -96,9 +137,10 @@ export default class RasterLayer extends CanvasTileLayer {
 
   render() {
     console.log('raster render');
+    console.log(this.props.selectedMap);
     // create an image in the hidden canvas from the props
-    if (this.props.raster) {
-    var raster = this.props.raster;
+    if (this.props.selectedMap) {
+    var raster = allMaps[this.props.selectedMap];
     var ctx = this.canvas.getContext('2d');
     var width = raster.data[0].length;
     var height = raster.data.length;
@@ -112,7 +154,8 @@ export default class RasterLayer extends CanvasTileLayer {
          data[((j*width+i)*4)]   = color.r; // red
          data[((j*width+i)*4)+1] = color.g; // green
          data[((j*width+i)*4)+2] = color.b; // blue
-         data[((j*width+i)*4)+3] = color.a*255;     // alpha
+//         data[((j*width+i)*4)+3] = color.a*1;     // alpha
+         data[((j*width+i)*4)+3] = 1.0;     // alpha
       }
     } 
     ctx.putImageData(img, 0, 0);

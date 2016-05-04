@@ -8,7 +8,7 @@ import uuid from 'uuid';
 
 @Cerebral((props) => {
   return {
-    mapList: ['home', 'map_list' ],
+    legends: ['home', 'legends' ],
     selectedMap: [ 'home', 'model', 'selected_map' ]
   };
 })
@@ -31,7 +31,7 @@ class Legend extends MapControl {
   }
 
   render() {
-    var levels = this.props.mapList[this.props.selectedMap].legend.levels;
+    var levels = this.props.legends[this.props.selectedMap].levels;
     var numlevels = levels.length;
     var legendPieces = [];
 

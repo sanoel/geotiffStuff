@@ -1,4 +1,5 @@
 import uuid from 'uuid';
+/*
 import classes from './soil_props/Classes.js';
 import ca from './soil_props/ca.js';
 import cec from './soil_props/cec.js';
@@ -16,8 +17,10 @@ import s from './soil_props/s.js';
 import sand from './soil_props/sand.js';
 import silt from './soil_props/silt.js';
 import zn from './soil_props/zn.js';
+*/
 import lots from './Lots.js';
-
+import legends from './legends.js';
+/*
 var soil_props = {
   OC: oc,
   OM: om,
@@ -36,10 +39,31 @@ var soil_props = {
   pH: ph,
   Classes: classes,
 };
-
+*/
 var tree = {
+  
+  legends: legends,
 
-  map_list: soil_props,
+  map_list: [
+    'C.O.',
+    'M.O.',
+    'B',
+    'C.I.C.E.',
+    'Aricilla',
+    'Arena',
+    'Limo',
+    'Ca',
+    'Mg',
+    'Mn',
+    'Na',
+    'Fe',
+    'Al',
+    'K',
+    'P',
+    'pH',
+    'Zn',
+    'Class'
+  ],
 
   lots: lots,
   
