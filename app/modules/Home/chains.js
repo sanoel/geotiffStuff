@@ -52,7 +52,6 @@ function clearMap ({state}) {
 };
 
 function setMapListItem ({input, state}) {
-  console.log(input.mapItem);
   state.set(['home', 'model', 'selected_map'], input.mapItem); 
 };
 

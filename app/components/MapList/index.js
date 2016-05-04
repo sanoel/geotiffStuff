@@ -19,13 +19,31 @@ class MapList extends React.Component {
 
   render() {
     const signals = this.props.signals.home;
-    var mapList = this.props.mapList;
     var self = this;
+    var mapList = this.props.mapList;
     var maps = [];
+    _.each(self.props.mapList, function(map, key) {
+      if (map == self.props.selectedMap) {
+        maps.push(<div 
+          key={uuid.v4()} 
+          className={styles['selected-maplist-item']}>
+          {map}
+        </div>);
+      } else {
+        maps.push(<div 
+          key={uuid.v4()} 
+          className={styles['maplist-item']}
+          onClick={() => signals.mapListItemClicked({mapItem:map})}>
+          {map}
+        </div>);
+      }
+      maps.push(<hr key={uuid.v4()}/>);
+    });
+/*
     for (var i = 0; i < mapList.length; i++) { 
       var map = mapList[i];
-      console.log(map);
-      if (map == self.props.selectedMap) {
+      console.log(mapList[i]);
+      if (map == this.props.selectedMap) {
         maps.push(<div 
           key={uuid.v4()} 
           className={styles['selected-maplist-item']}>
@@ -41,6 +59,7 @@ class MapList extends React.Component {
       }
       maps.push(<hr key={uuid.v4()}/>);
     };
+*/
     return (
       <div className={styles['maplist']}>
         {maps}

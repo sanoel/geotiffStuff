@@ -37,9 +37,9 @@ allMaps['Mn'] = mn;
 allMaps['Zn'] = zn;
 allMaps['K'] = k;
 allMaps['Al'] = al;
-allMaps['Sand'] = sand;
-allMaps['Silt'] = silt;
-allMaps['Clay'] = clay;
+allMaps['Arena'] = sand;
+allMaps['Limo'] = silt;
+allMaps['Aricilla'] = clay;
 allMaps['Class'] = classes;
 allMaps['pH'] = ph;
 
@@ -80,7 +80,6 @@ export default class RasterLayer extends CanvasTileLayer {
   drawTile(canvas, tilePoint, zoom) {
     if (this.props.selectedMap) {
     var raster = allMaps[this.props.selectedMap]; 
-    console.log(raster);
     var ctx = canvas.getContext('2d');
     var tileSwPt = new L.Point(tilePoint.x*256, (tilePoint.y*256)+256);
     var tileNePt = new L.Point((tilePoint.x*256)+256, tilePoint.y*256);
@@ -154,8 +153,8 @@ export default class RasterLayer extends CanvasTileLayer {
          data[((j*width+i)*4)]   = color.r; // red
          data[((j*width+i)*4)+1] = color.g; // green
          data[((j*width+i)*4)+2] = color.b; // blue
-//         data[((j*width+i)*4)+3] = color.a*1;     // alpha
-         data[((j*width+i)*4)+3] = 1.0;     // alpha
+//         data[((j*width+i)*4)+3] = color.a*255;     // alpha
+         data[((j*width+i)*4)+3] = 255;     // alpha
       }
     } 
     ctx.putImageData(img, 0, 0);
