@@ -20,8 +20,8 @@ class App extends React.Component {
 
     return (
       <div className="app">
-        <ControlPanel />
         <Map />
+        <ControlPanel />
       </div>
     );
   }

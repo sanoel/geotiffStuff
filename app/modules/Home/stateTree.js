@@ -19,7 +19,6 @@ import silt from './soil_props/silt.js';
 import zn from './soil_props/zn.js';
 */
 import lots from './Lots.js';
-import legends from './legends.js';
 /*
 var soil_props = {
   OC: oc,
@@ -42,8 +41,6 @@ var soil_props = {
 */
 var tree = {
   
-  legends: legends,
-
   map_list: [
     'C.O.',
     'M.O.',

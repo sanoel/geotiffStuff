@@ -2,46 +2,6 @@ import { Decorator as Cerebral } from 'cerebral-view-react';
 import { CanvasTileLayer, Point } from 'react-leaflet';
 import React from 'react';
 import styles from './style.css';
-//import allMaps from './all_maps.js';
-
-import co from './co.js';
-import mo from './mo.js';
-import b from './b.js';
-import cice from './cice.js';
-import clay from './clay.js';
-import sand from './sand.js';
-import silt from './silt.js';
-import ca from './ca.js';
-import mg from './mg.js';
-import mn from './mn.js';
-import na from './na.js';
-import fe from './fe.js';
-import al from './al.js';
-import k from './k.js';
-import p from './p.js';
-import ph from './ph.js';
-import zn from './zn.js';
-import classes from './classes.js';
-
-var allMaps = {};
-allMaps['C.O.'] = co;
-allMaps['M.O.'] = mo;
-allMaps['P'] = p;
-allMaps['Ca'] = ca;
-allMaps['Mg'] = mg;
-allMaps['CICE'] = cice;
-allMaps['B'] = b;
-allMaps['Na'] = na;
-allMaps['Fe'] = fe;
-allMaps['Mn'] = mn;
-allMaps['Zn'] = zn;
-allMaps['K'] = k;
-allMaps['Al'] = al;
-allMaps['Arena'] = sand;
-allMaps['Limo'] = silt;
-allMaps['Aricilla'] = clay;
-allMaps['Class'] = classes;
-allMaps['pH'] = ph;
 
 function blendColors(c1, c2, percent) {
   let a1 = (typeof c1.a === 'undefined') ? 255 : c1.a; // Defualt opaque
@@ -65,8 +25,8 @@ export default class RasterLayer extends CanvasTileLayer {
   componentWillMount() {
     this.container = document.getElementById('hidden-stuff');
     this.canvas = document.createElement('canvas');
-    this.canvas.style.visibility = 'visible';
-    this.canvas.style.zIndex = 80;
+    this.canvas.style.visibility = 'hidden';
+    this.canvas.style.zIndex = -2;
     this.container.appendChild(this.canvas);
 
     super.componentWillMount();
@@ -79,38 +39,38 @@ export default class RasterLayer extends CanvasTileLayer {
   
   drawTile(canvas, tilePoint, zoom) {
     if (this.props.selectedMap) {
-    var raster = allMaps[this.props.selectedMap]; 
-    var ctx = canvas.getContext('2d');
-    var tileSwPt = new L.Point(tilePoint.x*256, (tilePoint.y*256)+256);
-    var tileNePt = new L.Point((tilePoint.x*256)+256, tilePoint.y*256);
+      var raster = this.props.raster;
+      var ctx = canvas.getContext('2d');
+      var tileSwPt = new L.Point(tilePoint.x*256, (tilePoint.y*256)+256);
+      var tileNePt = new L.Point((tilePoint.x*256)+256, tilePoint.y*256);
 
-    var tileSw = this.props.map.unproject(tileSwPt, zoom);
-    var tileNe = this.props.map.unproject(tileNePt, zoom);
-    var tileBounds = L.latLngBounds(tileSw, tileNe);
+      var tileSw = this.props.map.unproject(tileSwPt, zoom);
+      var tileNe = this.props.map.unproject(tileNePt, zoom);
+      var tileBounds = L.latLngBounds(tileSw, tileNe);
 
-    var topLeft = raster.geotransform.topleft;
-    var dataSw = L.latLng(topLeft.lat + raster.geotransform.cellspacing.lat*raster.data.length, topLeft.lon);
-    var dataNe = L.latLng(topLeft.lat, topLeft.lon + raster.geotransform.cellspacing.lon*raster.data[0].length);
-    var dataBounds = L.latLngBounds([dataSw, dataNe]);
+      var topLeft = raster.geotransform.topleft;
+      var dataSw = L.latLng(topLeft.lat + raster.geotransform.cellspacing.lat*raster.data.length, topLeft.lon);
+      var dataNe = L.latLng(topLeft.lat, topLeft.lon + raster.geotransform.cellspacing.lon*raster.data[0].length);
+      var dataBounds = L.latLngBounds([dataSw, dataNe]);
+  
+      var dataSwPt = this.props.map.project(dataSw);
+      var dataNePt = this.props.map.project(dataNe);
  
-    var dataSwPt = this.props.map.project(dataSw);
-    var dataNePt = this.props.map.project(dataNe);
-
-    // Determine where to put the hidden image on the tile canvas 
-    if (tileBounds.intersects(dataBounds)) {
-      var tileLeft = dataSwPt.x - tileSwPt.x;
-      var tileTop =  dataNePt.y - tileNePt.y;
-      var tileHeight = (dataSwPt.y - dataNePt.y);
-      var tileWidth = (dataNePt.x - dataSwPt.x);
-      // Put it on the tile
-      ctx.drawImage(this.canvas, tileLeft, tileTop, tileWidth, tileHeight);
-    }
+      // Determine where to put the hidden image on the tile canvas 
+      if (tileBounds.intersects(dataBounds)) {
+        var tileLeft = dataSwPt.x - tileSwPt.x;
+        var tileTop =  dataNePt.y - tileNePt.y;
+        var tileHeight = (dataSwPt.y - dataNePt.y);
+        var tileWidth = (dataNePt.x - dataSwPt.x);
+        // Put it on the tile
+        ctx.drawImage(this.canvas, tileLeft, tileTop, tileWidth, tileHeight);
+      }
     }
   }
-
     
   colorForvalue(val) {
-    const raster = allMaps[this.props.selectedMap];
+//    const raster = allMaps[this.props.selectedMap];
+    const raster = this.props.raster;
     if (val == raster.nodataval) {
       return {r: 0, g: 0, b: 0, a: 0 };
     }
@@ -136,32 +96,30 @@ export default class RasterLayer extends CanvasTileLayer {
 
   render() {
     console.log('raster render');
-    console.log(this.props.selectedMap);
     // create an image in the hidden canvas from the props
     if (this.props.selectedMap) {
-    var raster = allMaps[this.props.selectedMap];
-    var ctx = this.canvas.getContext('2d');
-    var width = raster.data[0].length;
-    var height = raster.data.length;
-    this.canvas.width = width;
-    this.canvas.height = height;
-    var img = ctx.createImageData(width, height);
-    var data = img.data;
-    for (var j = 0; j < height; j++) {
-      for (var i = 0; i < width; i++) {
-         let color = this.colorForvalue(raster.data[j][i]);
-         data[((j*width+i)*4)]   = color.r; // red
-         data[((j*width+i)*4)+1] = color.g; // green
-         data[((j*width+i)*4)+2] = color.b; // blue
-//         data[((j*width+i)*4)+3] = color.a*255;     // alpha
-         data[((j*width+i)*4)+3] = 255;     // alpha
-      }
-    } 
-    ctx.putImageData(img, 0, 0);
-    this.leafletElement.redraw();
-    } else {
-      this.props.map.removeLayer(this);
+      var raster = this.props.raster;
+      var ctx = this.canvas.getContext('2d');
+      var width = raster.data[0].length;
+      var height = raster.data.length;
+      this.canvas.width = width;
+      this.canvas.height = height;
+      var img = ctx.createImageData(width, height);
+      var data = img.data;
+      for (var j = 0; j < height; j++) {
+        for (var i = 0; i < width; i++) {
+           let color = this.colorForvalue(raster.data[j][i]);
+           data[((j*width+i)*4)]   = color.r; // red
+           data[((j*width+i)*4)+1] = color.g; // green
+           data[((j*width+i)*4)+2] = color.b; // blue
+           data[((j*width+i)*4)+3] = color.a*255;     // alpha
+        }
+      } 
+      ctx.putImageData(img, 0, 0);
       this.leafletElement.redraw();
+    } else {
+        this.props.map.removeLayer(this);
+        this.leafletElement.redraw();
     }
     return super.render();
   }

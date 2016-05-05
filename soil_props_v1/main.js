@@ -14,7 +14,7 @@ fs.readdir('.', function(err, files) {
       var jsonData = geotiff2json(files[i], legends[files[i]]);
       legendsObj[jsonData.name] = jsonData.legend;
       all_maps[jsonData.name] = jsonData;
-      fs.writeFile('../app/components/RasterLayer/'+name+'.js', 'export default ' + JSON.stringify(jsonData), (err) => {
+      fs.writeFile('../app/components/Map/'+name+'.js', 'export default ' + JSON.stringify(jsonData), (err) => {
         if (err) throw err;
       });
     }

@@ -7,6 +7,7 @@
 }
 
 .maplist-item {
+  cursor: pointer;
   font-size: larger;
   font-family: sans-serif;
   color: #444444;
@@ -14,6 +15,8 @@
 }
 
 .selected-maplist-item {
+  cursor: pointer;
+  font-size: larger;
   font-size: larger;
   font-family: sans-serif;
   color: #FF0000;

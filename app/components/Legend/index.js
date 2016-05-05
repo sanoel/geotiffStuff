@@ -31,7 +31,7 @@ class Legend extends MapControl {
   }
 
   render() {
-    var levels = this.props.legends[this.props.selectedMap].levels;
+    var levels = this.props.data.levels;
     var numlevels = levels.length;
     var legendPieces = [];
 
