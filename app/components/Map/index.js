@@ -111,7 +111,7 @@ class _Map extends React.Component {
     );
     console.log(imageryTL);
 */
-    console.log(navigator.userAgent);
+    console.log(allMaps[this.props.selectedMap]);
     return (
       <div id='map-panel'>
         <Map

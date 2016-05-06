@@ -7,7 +7,7 @@ exports.geotiff2json = function(filename, legend) {
   var stats = band.getStatistics(false, true);
   var pixels = band.pixels;
   var name = filename.slice(0, -4);
-  console.log(filename);
+
   var json = {
     nodataval: band.noDataValue,
     name: legend.name,
