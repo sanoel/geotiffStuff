@@ -7,7 +7,7 @@ var app = express();
 passport.use(new DigestStrategy({ qop: 'auth' },
   function(username, done) {
     if (username !== 'alberto') return done(null, false);
-    return done(null, { username: 'alberto' }, 'samisamazing');
+    return done(null, { username: 'alberto' }, 'boilerup');
   },
   function(params, done) {
     // validate nonces as necessary
