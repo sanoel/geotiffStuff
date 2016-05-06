@@ -1,7 +1,6 @@
 import React, { Proptypes } from 'react';
 import { Decorator as Cerebral } from 'cerebral-view-react';
-import { MapControl } from 'react-leaflet';
-import { control } from 'leaflet';
+import { MapComponent } from 'react-leaflet';
 import styles from './legend.css';
 import Color from 'color';
 import uuid from 'uuid';
@@ -13,7 +12,7 @@ import uuid from 'uuid';
   };
 })
 
-class Legend extends MapControl {
+class Legend extends MapComponent {
   
   blendColors(c1, c2, percent) {
     let a1 = (typeof c1.a === 'undefined') ? 255 : c1.a; // Defualt opaque
@@ -27,7 +26,6 @@ class Legend extends MapControl {
   }
 
   componentWillMount() {
-    this.leafletElement = control.attribution(this.props);
   }
 
   render() {

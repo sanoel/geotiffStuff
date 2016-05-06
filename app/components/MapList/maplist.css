@@ -2,8 +2,9 @@
   position: relative;
   padding: 3px;
   width: initial;
-  height: 98vh;
+  height: 100vh;
   background-color: #FFFFFF;
+  overflow:scroll;
 }
 
 .maplist-item {

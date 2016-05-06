@@ -95,7 +95,6 @@ export default class RasterLayer extends CanvasTileLayer {
   }
 
   render() {
-    console.log('raster render');
     // create an image in the hidden canvas from the props
     if (this.props.selectedMap) {
       var raster = this.props.raster;

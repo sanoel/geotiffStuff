@@ -39,27 +39,6 @@ class MapList extends React.Component {
       }
       maps.push(<hr key={uuid.v4()}/>);
     });
-/*
-    for (var i = 0; i < mapList.length; i++) { 
-      var map = mapList[i];
-      console.log(mapList[i]);
-      if (map == this.props.selectedMap) {
-        maps.push(<div 
-          key={uuid.v4()} 
-          className={styles['selected-maplist-item']}>
-          {map}
-        </div>);
-      } else {
-        maps.push(<div 
-          key={uuid.v4()} 
-          className={styles['maplist-item']}
-          onClick={() => {signals.mapListItemClicked({mapItem:map})}}>
-          {map}
-        </div>);
-      }
-      maps.push(<hr key={uuid.v4()}/>);
-    };
-*/
     return (
       <div className={styles['maplist']}>
         {maps}
