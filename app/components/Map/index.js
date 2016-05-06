@@ -1,7 +1,6 @@
 import React, { Proptypes } from 'react';
 import { Decorator as Cerebral, Link } from 'cerebral-view-react';
 import { GeoJson, Circle, Polygon, Marker, Map, TileLayer, ImageOverlay, latLng, latLngBounds} from 'react-leaflet';
-import CordovaTileLayer from '../CordovaTileLayer';
 import RasterLayer from '../RasterLayer';
 import Legend from '../Legend';
 import styles from './map.css';
@@ -96,22 +95,7 @@ class _Map extends React.Component {
     />;
     //var rasterLayer = (!_.isEmpty(this.props.selectedMap)) ? (<RasterLayer raster={allMaps[this.props.selectedMap]} />) : (null);
     var legend = (!_.isEmpty(this.props.selectedMap)) ? (<Legend position={'bottomright'} data={allMaps[this.props.selectedMap].legend}/>) : (null);
-/*
-    var imageryTL = ((checkDevice == mobile) ? 
-      <CordovaTileLayer 
-        url='http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}'
-        attribution='Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
-        name='optagro-imagery-cache'
-        folder='optagro'
-      /> : 
-      <TileLayer
-        url='http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}'
-        attribution='Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
-      />
-    );
-    console.log(imageryTL);
-*/
-    console.log(allMaps[this.props.selectedMap]);
+
     return (
       <div id='map-panel'>
         <Map
@@ -123,11 +107,13 @@ class _Map extends React.Component {
           maxZoom={17}
           onLocationfound={(e) => {signals.locationFound({latlng:e.latlng, accuracy:e.accuracy})}}
           locationError={console.log("Location Error!")}>
-  
+
           <TileLayer 
-            url='https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}'
+            url='http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}'
             attribution='Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
+            useCache={true}
           />
+  
           <RasterLayer 
             raster={!_.isEmpty(this.props.selectedMap) ? allMaps[this.props.selectedMap] : null}
           />
