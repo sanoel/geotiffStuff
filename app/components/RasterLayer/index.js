@@ -38,6 +38,7 @@ export default class RasterLayer extends CanvasTileLayer {
   }
   
   drawTile(canvas, tilePoint, zoom) {
+    console.log(zoom);
     if (this.props.selectedMap) {
       var raster = this.props.raster;
       var ctx = canvas.getContext('2d');

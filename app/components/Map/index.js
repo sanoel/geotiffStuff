@@ -101,6 +101,8 @@ class _Map extends React.Component {
       <CordovaTileLayer 
         url='http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}'
         attribution='Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
+        name='optagro-imagery-cache'
+        folder='optagro'
       /> : 
       <TileLayer
         url='http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}'
@@ -118,13 +120,12 @@ class _Map extends React.Component {
           dragging={true} 
           center={position} 
           zoom={11}
+          maxZoom={17}
           onLocationfound={(e) => {signals.locationFound({latlng:e.latlng, accuracy:e.accuracy})}}
           locationError={console.log("Location Error!")}>
-
-          <CordovaTileLayer 
+  
+          <TileLayer 
             url='http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}'
-            folder='./'
-            name='optagro-imagery-cache'
             attribution='Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
           />
           <RasterLayer 

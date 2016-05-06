@@ -12,9 +12,23 @@ import MenuBar from '../MenuBar';
 })
 
 class App extends React.Component {
+  
 
   static propTypes = {
   };
+
+  componentWillMount() {
+    //show loading gif
+//    var container = document.getElementById('loading');
+//    container.style.visibility = 'visible';
+  }
+
+  
+  componentDidMount() {
+    //hide loading gif
+//    var container = document.getElementById('loading');
+//    container.style.visibility = 'hidden';
+  }
 
   render() {
 
