@@ -45,6 +45,7 @@
     "css-loader": "^0.23.1",
     "express": "^4.13.4",
     "file-loader": "^0.8.5",
+    "font-awesome": "^4.6.1",
     "geodesy": "^1.1.0",
     "geojson-vt": "^2.1.8",
     "hsl-to-rgb": "^1.0.0",
