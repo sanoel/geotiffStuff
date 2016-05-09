@@ -15,7 +15,7 @@
     "Sam Noel <sanoel@purdue.edu>",
     "Aaron Ault <aultac@gmail.com>"
   ],
-  "license": "Apache 2.0",
+  "license": "Apache-2.0",
   "bugs": {
     "url": "https://github.com/sanoel/geotiffStuff/issues"
   },
@@ -45,16 +45,13 @@
     "css-loader": "^0.23.1",
     "express": "^4.13.4",
     "file-loader": "^0.8.5",
-    "font-awesome": "^4.6.1",
     "geodesy": "^1.1.0",
     "geojson-vt": "^2.1.8",
     "hsl-to-rgb": "^1.0.0",
     "kotatsu": "^0.10.0",
-    "leaflet": "^1.0.0-beta.1",
     "lodash": "^4.5.1",
-    "passport": "^0.3.2",
-    "passport-http": "^0.3.0",
     "postcss-loader": "^0.8.1",
+    "pouchdb": "^5.3.2",
     "react": "^0.14.7",
     "react-dom": "^0.14.7",
     "react-leaflet": "^0.10.0",
