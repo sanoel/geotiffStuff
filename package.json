@@ -50,7 +50,7 @@
     "geojson-vt": "^2.1.8",
     "hsl-to-rgb": "^1.0.0",
     "kotatsu": "^0.10.0",
-    "leaflet": "^0.7.7",
+    "leaflet": "^1.0.0-beta.1",
     "lodash": "^4.5.1",
     "passport": "^0.3.2",
     "passport-http": "^0.3.0",
